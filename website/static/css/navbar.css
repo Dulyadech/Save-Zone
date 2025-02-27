@@ -14,6 +14,7 @@ nav {
     top: 2vh;
     transform: translateX(-50%);
     z-index: 1000;
+    overflow: hidden;
 }
 
 nav .logo-container {

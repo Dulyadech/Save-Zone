@@ -30,7 +30,7 @@ nav .menu {
     width: 1500px;
     opacity: 0.5;
     position: absolute;
-    top: -300px;
+    top: 300px;
 }
 
 .purple {
@@ -61,12 +61,15 @@ nav .menu {
 
 .upload-header {
     text-align: center;
+    font-weight: 100px;
     margin-bottom: 40px;
 }
 
 .upload-header h1 {
     font-size: 3rem;
-    margin-bottom: 10px;
+    /* font-family: "Lovelace Text"; */
+    font-weight: 550;
+    /* margin-bottom: 50px; */
     background: linear-gradient(90deg, #8003bb, #ff00a1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -182,7 +185,6 @@ nav .menu {
     transition: all 0.3s ease-in-out;
 }
 
-/* Progress bar styles */
 .upload-progress {
     display: flex;
     flex-direction: column;
@@ -306,6 +308,7 @@ nav .menu {
 
 .complete-icon {
     font-size: 4rem;
+    font-weight: bold;
     color: #4CAF50;
     margin-bottom: 20px;
 }
@@ -326,6 +329,23 @@ nav .menu {
     object-fit: cover;
 }
 
+/* Action Buttons Container */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Option Divider */
+.option-divider {
+    margin: 15px 0;
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Preview & Edit Button */
 .preview-edit-button {
     display: flex;
     align-items: center;
@@ -337,7 +357,7 @@ nav .menu {
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 500;
-    margin-top: 20px;
+    margin-top: 0;
     transition: all 0.3s;
 }
 
@@ -350,6 +370,37 @@ nav .menu {
 }
 
 .preview-edit-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Upload Again Button */
+.upload-again-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: white;
+    padding: 12px 30px;
+    border: 2px solid #ff00a1;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-again-button p {
+    margin: 0 10px 0 0;
+}
+
+.upload-again-button ion-icon {
+    font-size: 1.4rem;
+}
+
+.upload-again-button:hover {
+    background: rgba(255, 0, 161, 0.1);
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
@@ -387,5 +438,16 @@ nav .menu {
         width: 25px;
         height: 25px;
         font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .action-buttons {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .option-divider {
+        margin: 0 20px;
     }
 }

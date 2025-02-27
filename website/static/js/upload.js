@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressText = document.getElementById('progressText');
     const cancelUpload = document.getElementById('cancelUpload');
     const videoPreview = document.getElementById('videoPreview');
+    const uploadAgainBtn = document.getElementById('uploadAgainBtn');
+    
+    // Variables to store interval and timeout IDs for cancellation
+    let uploadIntervalId = null;
+    let processingTimeouts = [];
     
     // Set up drag and drop
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -57,11 +62,44 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Cancel upload button
     cancelUpload.addEventListener('click', function() {
+        // Cancel all ongoing processes
+        cancelAllProcesses();
         // Reset UI to initial state
         resetUploadUI();
     });
     
+    // Upload again button
+    if (uploadAgainBtn) {
+        uploadAgainBtn.addEventListener('click', function() {
+            // Cancel all ongoing processes
+            cancelAllProcesses();
+            // Reset UI to initial state
+            resetUploadUI();
+        });
+    }
+    
+    function cancelAllProcesses() {
+        // Cancel upload interval if running
+        if (uploadIntervalId !== null) {
+            clearInterval(uploadIntervalId);
+            uploadIntervalId = null;
+        }
+        
+        // Cancel all processing timeouts
+        processingTimeouts.forEach(timeoutId => {
+            clearTimeout(timeoutId);
+        });
+        processingTimeouts = [];
+        
+        // Remove any created objectURL to prevent memory leaks
+        if (sessionStorage.getItem('processedVideoURL')) {
+            URL.revokeObjectURL(sessionStorage.getItem('processedVideoURL'));
+            sessionStorage.removeItem('processedVideoURL');
+        }
+    }
+    
     function resetUploadUI() {
+        // Reset UI elements
         uploadPlaceholder.style.display = 'flex';
         uploadProgress.style.display = 'none';
         processingStatus.style.display = 'none';
@@ -71,8 +109,34 @@ document.addEventListener('DOMContentLoaded', function() {
         progressBar.style.width = '0%';
         progressText.textContent = '0%';
         
+        // Reset processing steps icons
+        resetProcessingSteps();
+        
         // Clear file input
         uploadInput.value = '';
+        
+        // Clear video preview
+        videoPreview.innerHTML = '';
+    }
+    
+    function resetProcessingSteps() {
+        // Reset all processing steps to initial state
+        const steps = [
+            document.getElementById('step1'),
+            document.getElementById('step2'),
+            document.getElementById('step3'),
+            document.getElementById('step4')
+        ];
+        
+        // Reset step 1 (keep as completed for the next upload)
+        steps[0].querySelector('.step-icon').className = 'step-icon completed';
+        steps[0].querySelector('.step-icon ion-icon').setAttribute('name', 'checkmark-circle');
+        
+        // Reset steps 2-4
+        for (let i = 1; i < steps.length; i++) {
+            steps[i].querySelector('.step-icon').className = 'step-icon';
+            steps[i].querySelector('.step-icon ion-icon').setAttribute('name', 'ellipse-outline');
+        }
     }
     
     function handleFiles(file) {
@@ -98,16 +162,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function simulateUpload(file) {
         let progress = 0;
-        const interval = setInterval(() => {
+        uploadIntervalId = setInterval(() => {
             progress += Math.random() * 10;
             if (progress >= 100) {
                 progress = 100;
-                clearInterval(interval);
+                clearInterval(uploadIntervalId);
+                uploadIntervalId = null;
                 
                 // Upload complete, start processing
-                setTimeout(() => {
+                const timeoutId = setTimeout(() => {
                     startProcessing(file);
                 }, 500);
+                processingTimeouts.push(timeoutId);
             }
             
             // Update progress UI
@@ -139,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Step 1 is already complete (upload)
         
         // Simulate step 2 (Dancer Detection)
-        setTimeout(() => {
+        const timeout1 = setTimeout(() => {
             steps[1].querySelector('.step-icon').classList.remove('processing');
             steps[1].querySelector('.step-icon').classList.add('completed');
             steps[1].querySelector('.step-icon ion-icon').setAttribute('name', 'checkmark-circle');
@@ -148,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
             steps[2].querySelector('.step-icon').classList.add('processing');
             steps[2].querySelector('.step-icon ion-icon').setAttribute('name', 'sync-outline');
             
-            setTimeout(() => {
+            const timeout2 = setTimeout(() => {
                 // Complete step 3
                 steps[2].querySelector('.step-icon').classList.remove('processing');
                 steps[2].querySelector('.step-icon').classList.add('completed');
@@ -158,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 steps[3].querySelector('.step-icon').classList.add('processing');
                 steps[3].querySelector('.step-icon ion-icon').setAttribute('name', 'sync-outline');
                 
-                setTimeout(() => {
+                const timeout3 = setTimeout(() => {
                     // Complete step 4
                     steps[3].querySelector('.step-icon').classList.remove('processing');
                     steps[3].querySelector('.step-icon').classList.add('completed');
@@ -167,8 +233,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Show completion UI
                     showCompletionUI(videoURL);
                 }, 2000);
+                processingTimeouts.push(timeout3);
             }, 3000);
+            processingTimeouts.push(timeout2);
         }, 2000);
+        processingTimeouts.push(timeout1);
     }
     
     function showCompletionUI(videoURL) {

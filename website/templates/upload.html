@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/upload.css">
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="../static/css/upload.css">
+    <link rel="stylesheet" href="../static/css/navbar.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
@@ -46,7 +46,7 @@
                     <p>Browse Files</p>
                     <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
                 </button>
-                <p class="upload-info">Supported formats: MP4, MOV, AVI (Max: 500MB)</p>
+                <p class="upload-info">Allowed file types: MP4, MOV, AVI (Max: 500MB)</p>
             </div>
             
             <!-- This section will be shown during upload -->
@@ -99,14 +99,21 @@
                 <div class="video-preview" id="videoPreview">
                     <!-- Preview thumbnail will be placed here -->
                 </div>
-                <a href="preview_&_edit.html" class="preview-edit-button">
-                    <p>Preview & Edit</p>
-                    <ion-icon name="create-outline"></ion-icon>
-                </a>
+                <div class="action-buttons">
+                    <a href="preview_&_edit.html" class="preview-edit-button">
+                        <p>Preview & Edit</p>
+                        <ion-icon name="create-outline"></ion-icon>
+                    </a>
+                    <!-- <div class="option-divider">or</div> -->
+                    <!-- <button class="upload-again-button" id="uploadAgainBtn">
+                        <p>Upload Another</p>
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                    </button> -->
+                </div>
             </div>
         </div>
     </div>
     
-    <script src="js/upload.js"></script>
+    <script src="../static/js/upload.js"></script>
 </body>
 </html>
