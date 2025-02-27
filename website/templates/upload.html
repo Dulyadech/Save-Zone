@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/upload.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+    <title>Save Zone - Upload</title>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" class="logo-container">
+            <div class="logo">Save Zone</div>
+            <ion-icon name="musical-note-outline"></ion-icon>
+        </a>
+        <ul>
+            <li><a href="upload.html" class="menu">Upload</a></li>
+            <li><a href="create.html">Create</a></li>
+            <li><a href="preview_&_edit.html">Preview & Edit</a></li>
+            <li><a href="about_us.html">About us</a></li>
+        </ul>
+    </nav>
+    <div class="elements">
+        <div class="circle purple"></div>
+        <div class="circle pink"></div>
+    </div>
+    
+    <div class="upload-container">
+        <div class="upload-header">
+            <h1>Upload Your Dance Video</h1>
+            <p>Upload your performance video and we'll automatically arrange dance zones for you</p>
+        </div>
+        
+        <div class="upload-area" id="uploadArea">
+            <input type="file" id="uploadInput" accept="video/*" style="display: none;">
+            <div class="upload-placeholder" id="uploadPlaceholder">
+                <ion-icon name="cloud-upload-outline" class="upload-icon-large"></ion-icon>
+                <p>Drag and drop your video here</p>
+                <p>or</p>
+                <button class="Upload" onclick="document.getElementById('uploadInput').click()">
+                    <p>Browse Files</p>
+                    <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
+                </button>
+                <p class="upload-info">Supported formats: MP4, MOV, AVI (Max: 500MB)</p>
+            </div>
+            
+            <!-- This section will be shown during upload -->
+            <div class="upload-progress" id="uploadProgress" style="display: none;">
+                <h3>Uploading Video...</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="progressText">0%</p>
+                <button class="cancel-button" id="cancelUpload">Cancel</button>
+            </div>
+            
+            <!-- This section will be shown during processing -->
+            <div class="processing-status" id="processingStatus" style="display: none;">
+                <h3>Processing Dance Zones</h3>
+                <div class="processing-steps">
+                    <div class="step" id="step1">
+                        <div class="step-icon completed"><ion-icon name="checkmark-circle"></ion-icon></div>
+                        <div class="step-info">
+                            <p class="step-title">Upload Complete</p>
+                        </div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-icon processing"><ion-icon name="sync-outline"></ion-icon></div>
+                        <div class="step-info">
+                            <p class="step-title">Dancer Detection</p>
+                        </div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-icon"><ion-icon name="ellipse-outline"></ion-icon></div>
+                        <div class="step-info">
+                            <p class="step-title">Zone Mapping</p>
+                        </div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-icon"><ion-icon name="ellipse-outline"></ion-icon></div>
+                        <div class="step-info">
+                            <p class="step-title">Finalizing</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="processing-info">This may take a few minutes depending on video length</p>
+            </div>
+            
+            <!-- This section will be shown after processing is complete -->
+            <div class="upload-complete" id="uploadComplete" style="display: none;">
+                <ion-icon name="checkmark-circle" class="complete-icon"></ion-icon>
+                <h3>Processing Complete!</h3>
+                <p>Your dance zones have been successfully created</p>
+                <div class="video-preview" id="videoPreview">
+                    <!-- Preview thumbnail will be placed here -->
+                </div>
+                <a href="preview_&_edit.html" class="preview-edit-button">
+                    <p>Preview & Edit</p>
+                    <ion-icon name="create-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/upload.js"></script>
+</body>
+</html>

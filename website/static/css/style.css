@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    background: black;
+    font-family: "Poppins";
+    margin: 0;
+    /* overflow: hidden; */
+    padding: 0;
+}
+
+.elements {
+    display: flex;
+    position: relative;
+}
+
+.circle {
+    border-radius: 100%;
+    height: 1500px; width: 1500px;
+    opacity: 0.5;
+    position: absolute;
+    top: 300px;
+}
+
+.purple {
+    background-color: #6e02a7;
+    filter: blur(200px);
+    left: -400px;
+}
+
+.pink {
+    background-color: #dc89bb;
+    filter: blur(300px);
+    right: -400px;
+}
+
+.big_logo {
+    left: 50px;
+    position: absolute;
+    top: 110px;
+}
+
+.big_logo img {
+    height: auto; max-width: 100%;
+}
+
+.button {
+    align-items: center;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    top: 530px;
+}
+
+.Upload,
+.Create {
+    align-items: center;
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    font-size: 3vh;
+    font-weight: normal;
+    height: 50px;  width: 200px;
+    justify-content: flex-start;
+    padding: 10px 10px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.Upload p,
+.Create p {
+    flex-grow: 1;
+    font-size: 3vh;
+    margin: 0;
+    text-align: center;
+}
+
+.Upload-icon,
+.Create-icon {
+    align-items: center;
+    background-color: white;
+    border-radius: 50%;
+    color: #ff00a1;
+    display: flex;
+    font-size: 70px;
+    font-weight: normal;
+    height: 90%; width: 25%;
+    justify-content: center;
+    padding: 3px;
+    /* margin-left: auto; */
+    /* filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.8)); */
+}
+
+.Upload:hover,
+.Create:hover {
+    transform: scale(1.1);
+    font-size: 3.5vh;
+    transition: 0.5s;
+    background: white;
+    /* background: linear-gradient(90deg, #00ff55, #00aeff);  */
+    /* color: linear-gradient(90deg, #8003bb, #ff00a1); */
+    box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0px 0px 40px rgba(255, 255, 255, 0.8); */
+    transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.Upload:hover p,
+.Create:hover p {
+    /* background:  */
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+}
+
+
+.Upload:hover .Upload-icon,
+.Create:hover .Create-icon {
+    color: white;
+    background-color: #ff00a1;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.Or {
+    font-size: 3.2vh;
+    color: white;
+}
+
+section {
+    width: 100%;
+    height: 100vh;
+}

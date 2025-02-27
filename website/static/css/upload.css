@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    background: black;
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+    color: white;
+    min-height: 100vh;
+}
+
+nav .menu {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0px 0px 100px 20px rgba(0, 0, 1, 0.99);
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+.elements {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.circle {
+    border-radius: 100%;
+    height: 1500px;
+    width: 1500px;
+    opacity: 0.5;
+    position: absolute;
+    top: -300px;
+}
+
+.purple {
+    background-color: #6e02a7;
+    filter: blur(200px);
+    left: -500px;
+}
+
+.pink {
+    background-color: #dc89bb;
+    filter: blur(300px);
+    right: -500px;
+}
+
+/* Upload Container Styles */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    position: relative;
+    z-index: 1;
+}
+
+.upload-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.upload-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.upload-header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.upload-area {
+    width: 100%;
+    min-height: 400px;
+    background: rgba(30, 30, 30, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    transition: all 0.3s ease;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.upload-area.dragover {
+    background: rgba(40, 40, 40, 0.6);
+    border-color: #ff00a1;
+}
+
+/* Upload Placeholder */
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 340px;
+}
+
+.upload-icon-large {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    color: #ff00a1;
+}
+
+.upload-info {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-top: 20px;
+}
+
+/* Upload Button */
+.Upload {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    color: white;
+    padding: 10px 10px;
+    width: 220px;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1.1rem;
+    font-weight: normal;
+    text-decoration: none;
+    margin: 20px 0;
+}
+
+.Upload p {
+    font-size: 1.1rem;
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.Upload-icon {
+    font-size: 24px;
+    font-weight: normal;
+    color: #ff00a1;
+    background-color: white;
+    border-radius: 50%;
+    padding: 3px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Upload:hover {
+    transform: scale(1.05);
+    font-size: 1.2rem;
+    transition: 0.5s;
+    background: white;
+    box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.5);
+    transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.Upload:hover p {
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+}
+
+.Upload:hover .Upload-icon {
+    color: white;
+    background-color: #ff00a1;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Progress bar styles */
+.upload-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 340px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    width: 0%;
+    border-radius: 10px;
+    transition: width 0.3s ease-in-out;
+}
+
+.cancel-button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.cancel-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Processing Status */
+.processing-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 340px;
+}
+
+.processing-steps {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px 0;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.step-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.step-icon ion-icon {
+    font-size: 1.5rem;
+}
+
+.step-icon.completed {
+    background: #4CAF50;
+    color: white;
+}
+
+.step-icon.processing {
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    color: white;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.step-info {
+    flex: 1;
+}
+
+.step-title {
+    margin: 0;
+    font-weight: 500;
+}
+
+.processing-info {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    text-align: center;
+}
+
+/* Upload Complete */
+.upload-complete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 340px;
+    text-align: center;
+}
+
+.complete-icon {
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.video-preview {
+    width: 100%;
+    max-width: 400px;
+    height: 225px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.video-preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-edit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.preview-edit-button p {
+    margin: 0 10px 0 0;
+}
+
+.preview-edit-button ion-icon {
+    font-size: 1.4rem;
+}
+
+.preview-edit-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .upload-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .upload-area {
+        padding: 20px;
+    }
+    
+    .upload-placeholder {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .upload-header h1 {
+        font-size: 2rem;
+    }
+    
+    .Upload {
+        width: 180px;
+        height: 45px;
+    }
+    
+    .Upload p {
+        font-size: 1rem;
+    }
+    
+    .Upload-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 20px;
+    }
+}
