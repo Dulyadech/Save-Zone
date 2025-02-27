@@ -75,10 +75,10 @@ body {
 }
 
 .Upload::after {
-    content: 'UPLOAD';
-    width: 100px;
+    content: 'Already have a video? Upload now!';
+    width: 250px;
     height: 18px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
     position: absolute;
     opacity: 0;
     font-size: 14px;
@@ -89,13 +89,30 @@ body {
     z-index: -10;
 }
 
-.Upload:hover::after {
+.Create::after {
+    content: 'Want to create zones manually?';
+    width: 250px;
+    height: 18px;
+    background-color: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    opacity: 0;
+    font-size: 14px;
+    top: -10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.3s ease;
+    z-index: -10;
+}
+
+.Upload:hover::after,
+.Create:hover::after {
     top: -30%;
     opacity: 1;
 }
 
 
-.Upload::before {
+.Upload::before,
+.Create::before {
     content: '';
     width: 0;
     height: 100%;
@@ -109,7 +126,9 @@ body {
     opacity: 0;
 }
 
-.Upload:hover::before {
+.Upload:hover::before,
+.Create:hover::before {
+    background-color: #6e02a7;
     opacity: 1;
     width: 100%;
 }
