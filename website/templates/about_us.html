@@ -15,15 +15,15 @@
 
 <body>
     <nav>
-        <a href="index.html" class="logo-container">
+        <a href="{{ url_for('views.home') }}" class="logo-container">
             <div class="logo">Save Zone</div>
             <ion-icon name="musical-note-outline"></ion-icon>
         </a>
         <ul>
-            <li><a href="upload.html">Upload</a></li>
-            <li><a href="create.html">Create</a></li>
-            <li><a href="preview_&_edit.html">Preview & Edit</a></li>
-            <li><a href="about_us.html" class="menu">About us</a></li>
+            <li><a href="{{ url_for('views.upload') }}">Upload</a></li>
+            <li><a href="{{ url_for('views.create') }}">Create</a></li>
+            <li><a href="{{ url_for('views.previews') }}">Preview & Edit</a></li>
+            <li><a href="{{ url_for('views.about') }}" class="menu">About us</a></li>
         </ul>
     </nav>
     <div class="elements">

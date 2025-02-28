@@ -14,15 +14,15 @@
 
 <body>
     <nav>
-        <a href="index.html" class="logo-container">
+        <a href="{{ url_for('views.home') }}" class="logo-container">
             <div class="logo">Save Zone</div>
             <ion-icon name="musical-note-outline"></ion-icon>
         </a>
         <ul>
-            <li><a href="upload.html" class="menu">Upload</a></li>
-            <li><a href="create.html">Create</a></li>
-            <li><a href="preview_&_edit.html">Preview & Edit</a></li>
-            <li><a href="about_us.html">About us</a></li>
+            <li><a href="{{ url_for('views.upload') }}" class="menu">Upload</a></li>
+            <li><a href="{{ url_for('views.create') }}">Create</a></li>
+            <li><a href="{{ url_for('views.previews') }}">Preview & Edit</a></li>
+            <li><a href="{{ url_for('views.about') }}">About us</a></li>
         </ul>
     </nav>
     <div class="elements">
@@ -36,8 +36,8 @@
             <p>Upload your performance video and we'll automatically arrange dance zones for you</p>
         </div>
         
+        <input type="file" id="uploadInput" accept="video/*" style="display: none;">
         <div class="upload-area" id="uploadArea">
-            <input type="file" id="uploadInput" accept="video/*" style="display: none;">
             <div class="upload-placeholder" id="uploadPlaceholder">
                 <ion-icon name="cloud-upload-outline" class="upload-icon-large"></ion-icon>
                 <p>Drag and drop your video here</p>
@@ -50,13 +50,13 @@
             </div>
             
             <!-- This section will be shown during upload -->
-            <div class="upload-progress" id="uploadProgress" style="display: none;">
+            <div id="uploadProgress" class="upload-progress" style="display: none;">
                 <h3>Uploading Video...</h3>
                 <div class="progress-container">
-                    <div class="progress-bar" id="progressBar"></div>
+                    <div id="progressBar" class="progress-bar"></div>
                 </div>
-                <p id="progressText">0%</p>
-                <button class="cancel-button" id="cancelUpload">Cancel</button>
+                <span id="progressText">0%</span>
+                <button id="cancelUpload" class="cancel-button">Cancel</button>
             </div>
             
             <!-- This section will be shown during processing -->
@@ -100,7 +100,7 @@
                     <!-- Preview thumbnail will be placed here -->
                 </div>
                 <div class="action-buttons">
-                    <a href="preview_&_edit.html" class="preview-edit-button">
+                    <a href="{{ url_for('views.previews')}}" class="preview-edit-button">
                         <p>Preview & Edit</p>
                         <ion-icon name="create-outline"></ion-icon>
                     </a>
