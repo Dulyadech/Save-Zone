@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const uploadInput = document.getElementById('uploadInput');
     const uploadArea = document.getElementById('uploadArea');
     const uploadPlaceholder = document.getElementById('uploadPlaceholder');
@@ -11,20 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoPreview = document.getElementById('videoPreview');
     const uploadAgainBtn = document.getElementById('uploadAgainBtn');
     
-    // Variables to store interval and timeout IDs for cancellation
     let uploadIntervalId = null;
     let processingTimeouts = [];
-    
-    // Set up drag and drop
+    let xhr = null;
+
+    // **ตั้งค่า Drag & Drop**
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         uploadArea.addEventListener(eventName, preventDefaults, false);
     });
-    
+
     function preventDefaults(e) {
         e.preventDefault();
         e.stopPropagation();
     }
-    
+
     ['dragenter', 'dragover'].forEach(eventName => {
         uploadArea.addEventListener(eventName, highlight, false);
     });
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ['dragleave', 'drop'].forEach(eventName => {
         uploadArea.addEventListener(eventName, unhighlight, false);
     });
-    
+
     function highlight() {
         uploadArea.classList.add('dragover');
     }
@@ -52,23 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
             handleFiles(files[0]);
         }
     }
-    
-    // Handle file input change
+
     uploadInput.addEventListener('change', function() {
         if (this.files.length > 0) {
             handleFiles(this.files[0]);
         }
     });
-    
-    // Cancel upload button
+
     cancelUpload.addEventListener('click', function() {
         // Cancel all ongoing processes
         cancelAllProcesses();
         // Reset UI to initial state
         resetUploadUI();
     });
-    
-    // Upload again button
+
     if (uploadAgainBtn) {
         uploadAgainBtn.addEventListener('click', function() {
             // Cancel all ongoing processes
@@ -77,27 +74,80 @@ document.addEventListener('DOMContentLoaded', function() {
             resetUploadUI();
         });
     }
-    
-    function cancelAllProcesses() {
-        // Cancel upload interval if running
-        if (uploadIntervalId !== null) {
-            clearInterval(uploadIntervalId);
-            uploadIntervalId = null;
+
+    function handleFiles(file) {
+        if (!file.type.match('video.*')) {
+            alert('กรุณาอัปโหลดไฟล์วิดีโอเท่านั้น');
+            return;
         }
         
-        // Cancel all processing timeouts
-        processingTimeouts.forEach(timeoutId => {
-            clearTimeout(timeoutId);
-        });
-        processingTimeouts = [];
-        
-        // Remove any created objectURL to prevent memory leaks
-        if (sessionStorage.getItem('processedVideoURL')) {
-            URL.revokeObjectURL(sessionStorage.getItem('processedVideoURL'));
-            sessionStorage.removeItem('processedVideoURL');
-        }
+        // Start handling the upload
+        handleUpload(file);
     }
-    
+
+    function handleUpload(file) {
+        if (!file.type.match('video.*')) {
+            alert('กรุณาอัปโหลดไฟล์วิดีโอเท่านั้น');
+            return;
+        }
+
+        uploadPlaceholder.style.display = 'none';
+        uploadProgress.style.display = 'flex';
+        progressBar.style.width = '0%';
+        progressText.innerText = "0%";
+
+        let formData = new FormData();
+        formData.append("video", file);
+
+        xhr = new XMLHttpRequest();
+        xhr.open("POST", "/upload", true);
+
+        // **แสดง Progress Bar**
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                let percent = (event.loaded / event.total) * 100;
+                progressBar.style.width = `${percent}%`;
+                progressText.innerText = Math.round(percent) + "%";
+            }
+        };
+
+        // **เมื่ออัปโหลดเสร็จ**
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    let response = JSON.parse(xhr.responseText);
+                    startProcessing(file);
+                } catch (e) {
+                    // If the response isn't JSON, just continue with processing
+                    startProcessing(file);
+                }
+            } else {
+                alert("เกิดข้อผิดพลาด: " + xhr.responseText);
+                resetUploadUI();
+            }
+        };
+
+        xhr.onerror = function () {
+            alert("เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+            resetUploadUI();
+        };
+
+        xhr.send(formData);
+    }
+
+    cancelUpload.addEventListener('click', function () {
+        if (xhr) {
+            xhr.abort();
+        }
+        resetUploadUI();
+    });
+
+    if (uploadAgainBtn) {
+        uploadAgainBtn.addEventListener('click', function () {
+            resetUploadUI();
+        });
+    }
+
     function resetUploadUI() {
         // Reset UI elements
         uploadPlaceholder.style.display = 'flex';
@@ -118,7 +168,33 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear video preview
         videoPreview.innerHTML = '';
     }
-    
+
+    function cancelAllProcesses() {
+        // Cancel upload interval if running
+        if (uploadIntervalId !== null) {
+            clearInterval(uploadIntervalId);
+            uploadIntervalId = null;
+        }
+        
+        // Cancel all processing timeouts
+        processingTimeouts.forEach(timeoutId => {
+            clearTimeout(timeoutId);
+        });
+        processingTimeouts = [];
+        
+        // Abort any ongoing XHR
+        if (xhr) {
+            xhr.abort();
+            xhr = null;
+        }
+        
+        // Remove any created objectURL to prevent memory leaks
+        if (sessionStorage.getItem('processedVideoURL')) {
+            URL.revokeObjectURL(sessionStorage.getItem('processedVideoURL'));
+            sessionStorage.removeItem('processedVideoURL');
+        }
+    }
+
     function resetProcessingSteps() {
         // Reset all processing steps to initial state
         const steps = [
@@ -138,50 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
             steps[i].querySelector('.step-icon ion-icon').setAttribute('name', 'ellipse-outline');
         }
     }
-    
-    function handleFiles(file) {
-        // Check if file is a video
-        if (!file.type.match('video.*')) {
-            alert('Please upload a video file');
-            return;
-        }
-        
-        // Check file size (500MB limit)
-        if (file.size > 500 * 1024 * 1024) {
-            alert('File size exceeds 500MB limit');
-            return;
-        }
-        
-        // Show upload progress UI
-        uploadPlaceholder.style.display = 'none';
-        uploadProgress.style.display = 'flex';
-        
-        // Simulate upload progress
-        simulateUpload(file);
-    }
-    
-    function simulateUpload(file) {
-        let progress = 0;
-        uploadIntervalId = setInterval(() => {
-            progress += Math.random() * 10;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(uploadIntervalId);
-                uploadIntervalId = null;
-                
-                // Upload complete, start processing
-                const timeoutId = setTimeout(() => {
-                    startProcessing(file);
-                }, 500);
-                processingTimeouts.push(timeoutId);
-            }
-            
-            // Update progress UI
-            progressBar.style.width = `${progress}%`;
-            progressText.textContent = `${Math.round(progress)}%`;
-        }, 300);
-    }
-    
+
     function startProcessing(file) {
         // Hide upload progress, show processing UI
         uploadProgress.style.display = 'none';
@@ -190,10 +223,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create URL for video preview
         const videoURL = URL.createObjectURL(file);
         
+        // Store the video URL in session storage for use in preview & edit page
+        sessionStorage.setItem('processedVideoURL', videoURL);
+        
         // Simulate processing steps
         simulateProcessingSteps(videoURL);
     }
-    
+
     function simulateProcessingSteps(videoURL) {
         const steps = [
             document.getElementById('step1'),
@@ -252,8 +288,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 Your browser does not support the video tag.
             </video>
         `;
-        
-        // Store the video URL in session storage for use in preview & edit page
-        sessionStorage.setItem('processedVideoURL', videoURL);
     }
 });
