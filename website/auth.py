@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from . import db, bcrypt
 from .models import User
@@ -35,8 +35,17 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             
-            flash('Account created successfully! You can now login.', 'success')
-            return redirect(url_for('auth.login'))
+            # Log in user immediately after registration
+            login_user(new_user)
+            
+            flash('Account created successfully!', 'success')
+            
+            # Check if it's an AJAX request or frame-based request
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return jsonify({"success": True, "redirect": url_for('views.home')})
+            
+            # Add a script to notify parent frame if in iframe
+            return render_template('auth_success.html')
             
     return render_template('register.html')
 
@@ -56,7 +65,13 @@ def login():
             login_user(user, remember=remember)
             next_page = request.args.get('next')
             flash('Login successful!', 'success')
-            return redirect(next_page) if next_page else redirect(url_for('views.home'))
+            
+            # Check if it's an AJAX request or frame-based request
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return jsonify({"success": True, "redirect": next_page or url_for('views.home')})
+            
+            # Add a script to notify parent frame if in iframe
+            return render_template('auth_success.html')
         else:
             flash('Login unsuccessful. Please check email and password.', 'danger')
             
@@ -96,6 +111,4 @@ def admin():
     # Get all users from the database
     users = User.query.all()
     
-    
-
     return render_template('admin.html', users=users)

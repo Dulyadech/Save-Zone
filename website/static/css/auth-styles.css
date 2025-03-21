@@ -1,0 +1,265 @@
+/* Modern Login & Register Styling with Glassmorphism Effect */
+
+body {
+  background: #00000000;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Container styling - UPDATED to center on desktop */
+.container.auth-container {
+  position: fixed;
+  top: 50%;
+  left: 50%; /* Changed from 5% to 50% to center horizontally */
+  transform: translate(-50%, -50%); /* Changed to translate both X and Y */
+  width: 330px;
+  z-index: 100;     
+  padding: 0;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+/* Card styling with glassmorphism effect */
+.auth-card {
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  padding: 30px;
+  color: white;
+  width: 100%;
+}
+
+.auth-header {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.auth-header h3 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #9901ff, #ff00a1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-header p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* Form controls styling */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 15px;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(153, 1, 255, 0.3);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Icon styling for form controls */
+.input-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.input-icon:hover {
+  color: white;
+}
+
+/* Checkbox styling */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin-right: 10px;
+  transition: all 0.3s;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: rgba(153, 1, 255, 0.7);
+  border-color: rgba(153, 1, 255, 0.9);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Button styling */
+.auth-button {
+  width: 100%;
+  background: linear-gradient(90deg, #9901ff, #ff00a1);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(153, 1, 255, 0.4);
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.auth-links a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.divider {
+  margin: 20px 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Alert styling */
+.alert {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  color: white;
+  font-size: 14px;
+}
+
+.alert-danger {
+  border-color: #ff4d4d;
+}
+
+.alert-success {
+  border-color: #47d764;
+}
+
+.alert-info {
+  border-color: #2196F3;
+}
+
+/* Close button styling */
+.close-auth {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 101;
+  transition: color 0.3s;
+}
+
+.close-auth:hover {
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container.auth-container {
+    width: 85%;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 20px;
+  }
+  
+  .auth-header h3 {
+    font-size: 24px;
+  }
+}
