@@ -10,17 +10,18 @@ body {
   min-height: 100vh;
 }
 
-/* Container styling - UPDATED to center on desktop */
+/* Container styling - Centered on desktop */
 .container.auth-container {
   position: fixed;
   top: 50%;
-  left: 50%; /* Changed from 5% to 50% to center horizontally */
-  transform: translate(-50%, -50%); /* Changed to translate both X and Y */
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 400px;
   z-index: 100;     
   padding: 0;
   overflow-y: auto;
   max-height: 90vh;
+  margin: 0 auto;
 }
 
 /* Card styling with glassmorphism effect */

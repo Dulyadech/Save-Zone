@@ -1,39 +1,29 @@
-</html>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Keep your existing head content -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/navbar.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
-    <title>Save Zone</title>
+    <title>Save Zone | Dance Position Management</title>
+    <meta name="description" content="Create, manage and visualize dance positions with Save Zone - the ultimate choreography planning tool">
 </head>
 
 <body>
-    <!-- Keep your existing nav bar -->
+    <!-- Navbar -->
     <nav>
-        <!-- save zone small logo -->
         <a href="{{ url_for('views.home') }}" class="logo-container">
             <div class="logo">Save Zone</div>
             <ion-icon name="musical-note-outline"></ion-icon>
         </a>
-        <!-- ul=unordered list → tag for create list in disorder -->
-        <!--li=list item -->
-        <!--a=anchor-->
         <ul>
-            <!-- upload menu -->
             <li><a href="{{ url_for('views.upload') }}">Upload</a></li>
-            <!-- create menu -->
             <li><a href="{{ url_for('views.create') }}">Create</a></li>
-            <!-- preview menu -->
             <li><a href="{{ url_for('views.previews') }}">Preview & Edit</a></li>
-            <!-- about us menu -->
             <li><a href="{{ url_for('views.about') }}">About us</a></li>
             
             {% if current_user.is_authenticated %}
@@ -58,88 +48,176 @@
     
     <!-- Hero Section -->
     <div class="hero-section">
-        <!-- background -->
+        <!-- Background circles -->
         <div class="circle purple"></div>
         <div class="circle pink"></div>
-        <!-- save zone big logo -->
+        
+        <!-- Save Zone big logo -->
         <div class="big_logo_container">
-            <!-- <div class="sparkles-container">
-                <span class="sparkle s1"></span>
-                <span class="sparkle s2"></span>
-                <span class="sparkle s3"></span>
-                <span class="sparkle s4"></span>
-                <span class="sparkle s5"></span>
-                <span class="sparkle s6"></span>
-                <span class="sparkle s7"></span>
-                <span class="sparkle s8"></span>
-            </div> -->
-            <div class="big_logo"><img src="../static/images/save zone.png" alt="Big Logo"></div>
+            <div class="big_logo">
+                <img src="{{ url_for('static', filename='images/save zone.png') }}" alt="Save Zone Logo">
+            </div>
+        </div>
+        
+        <!-- Button container -->
+        <div class="button">
+            <a href="{{ url_for('views.upload') }}" class="Upload">
+                <p>Upload</p>
+                <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
+            </a>
+            <span class="Or">
+                <p>or</p>
+            </span>
+            <a href="{{ url_for('views.create') }}" class="Create">
+                <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
+            </a>
         </div>
         
         <!-- Scroll indicator -->
         <div class="scroll-indicator">
-            <p>Scroll Down</p>
+            <p>Scroll to explore</p>
             <ion-icon name="chevron-down-outline" class="scroll-icon"></ion-icon>
         </div>
     </div>
 
     <!-- Featured Content Section -->
-    <section class="featured-content">
+    <section class="featured-content" id="about">
         <h2>Welcome to Save Zone</h2>
+        
+        <!-- Feature Showcase -->
+        <div class="feature-showcase">
+            <div class="showcase-slider">
+                <!-- Slide 1: 3D Dance Zone View -->
+                <div class="showcase-slide active">
+                    <div class="showcase-content">
+                        <div class="showcase-text">
+                            <h2>View it from all angles with 3D</h2>
+                            <p>Check out our new 3D view! Visualize your dance formations from any angle for perfect choreography planning.</p>
+                        </div>
+                        <div class="showcase-image">
+                            <img src="{{ url_for('static', filename='images/3d-dance-zone.png') }}" alt="3D Dance Zone Visualization">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2: After Zone Change -->
+                <div class="showcase-slide">
+                    <div class="showcase-content">
+                        <div class="showcase-text">
+                            <h2>Precise choreography planning</h2>
+                            <p>Plan every movement with exact timing and positioning. Perfect for group performances and professional dance productions.</p>
+                        </div>
+                        <div class="showcase-image">
+                            <img src="{{ url_for('static', filename='images/dance-formations.png') }}" alt="Dance Formations">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slider Dots -->
+            <div class="showcase-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+            </div>
+        </div>
+        
+        <!-- Enhanced content cards - Grid layout instead of carousel -->
         <div class="content-carousel">
-            <!-- Sample content cards -->
             <div class="content-card">
-                <img src="../static/images/upload-page.png" alt="Featured Content">
-                <div class="card-overlay">
-                    <h3>Upload</h3>
-                    <p>Description of the project</p>
+                <div class="feature-image">
+                    <img src="{{ url_for('static', filename='images/upload-page.png') }}" alt="Upload Feature">
                 </div>
+                <h3>Upload</h3>
+                <p>Upload your existing dance videos in seconds. Our AI-powered system will automatically detect dancers and positions.</p>
             </div>
+            
             <div class="content-card">
-                <img src="../static/images/create-page.png" alt="Featured Content">
-                <div class="card-overlay">
-                    <h3>Create</h3>
-                    <p>Description of the project</p>
+                <div class="feature-image">
+                    <img src="{{ url_for('static', filename='images/create-page.png') }}" alt="Create Feature">
                 </div>
+                <h3>Create</h3>
+                <p>Design your stage layout and arrange dancer positions with precision and ease.</p>
             </div>
+            
             <div class="content-card">
-                <img src="../static/images/preview-page.png" alt="Featured Content">
-                <div class="card-overlay">
-                    <h3>Preview and Edit</h3>
-                    <p>Description of the project</p>
+                <div class="feature-image">
+                    <img src="{{ url_for('static', filename='images/preview-page.png') }}" alt="Preview Feature">
                 </div>
-            </div>
-            <!-- Add more cards as needed -->
+                <h3>Preview & Edit</h3>
+                <p>Review your work, make adjustments, and perfect your choreography before the rehearsal.</p>
+            </div>        
         </div>
     </section>
 
     <!-- Action Section -->
     <section class="action-section">
-        <div class="info-column">
-            <h2>Create your zone easily and save-time</h2>
-            <!-- <p>Create your zone easily and save-time.</p> -->
-            <ul class="feature-list">
-                <li><ion-icon name="checkbox-outline"></ion-icon> Easy audio zone creation</li>
-                <li><ion-icon name="checkbox-outline"></ion-icon> Upload and edit existing videos</li>
-                <li><ion-icon name="checkbox-outline"></ion-icon> Professional audio management</li>
-                <li><ion-icon name="checkbox-outline"></ion-icon> Preview and export your work</li>
-            </ul>
-        </div>
-        
-        <div class="button-column">
-            <!-- upload button -->
-            <a href="{{ url_for('views.upload') }}" button class="Upload">
-                <p>Upload</p>
-                <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
-            </a>
-            <!-- Or text between button -->
-            <span class="Or">
-                <p>or</p>
-            </span>
-            <!-- create button -->
-            <a href="{{ url_for('views.create') }}" button class="Create">
-                <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
-            </a>
+        <div class="action-content-wrapper">
+            <div class="info-column">
+                <h2>Create your zone easily<br> and save time</h2>
+                <ul class="feature-list">
+                    <li>
+                        <div class="feature-icon">
+                            <ion-icon name="checkbox-outline"></ion-icon>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Easy zone creation</h4>
+                            <p>Create dance zones with our simple drag-and-drop interface</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <ion-icon name="film-outline"></ion-icon>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Upload and edit videos</h4>
+                            <p>Work with your existing performance videos</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <ion-icon name="analytics-outline"></ion-icon>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Dancer position tracking</h4>
+                            <p>Automatically detect and track dancer positions</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <ion-icon name="eye-outline"></ion-icon>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Preview and export</h4>
+                            <p>Review your work and share it with your team</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="button-column">
+                <div class="action-card">
+                    <div class="card-content">
+                        <h3>Get started today</h3>
+                        <p>Begin your choreography journey with Save Zone</p>
+                        <!-- upload button -->
+                        <a href="{{ url_for('views.upload') }}" class="Upload">
+                            <p>Upload</p>
+                            <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
+                        </a>
+                        <!-- Or text between button -->
+                        <span class="Or">
+                            <p>or</p>
+                        </span>
+                        <!-- create button -->
+                        <a href="{{ url_for('views.create') }}" class="Create">
+                            <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
+                        </a>
+                    </div>
+                    <div class="card-decoration">
+                        <div class="card-circle"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -157,9 +235,10 @@
         {% endwith %}
     </div>
 
-    <!-- link JavaScript files -->
+    <!-- JavaScript files -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main-auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/feature-showcase.js') }}"></script>
     <script>
         // Close flash messages
         document.querySelectorAll('.close-alert').forEach(btn => {
@@ -182,6 +261,49 @@
         document.querySelector('.scroll-indicator').addEventListener('click', function() {
             document.querySelector('.featured-content').scrollIntoView({ 
                 behavior: 'smooth' 
+            });
+        });
+        
+        // Feature showcase slider functionality
+        const slides = document.querySelectorAll('.showcase-slide');
+        const dots = document.querySelectorAll('.showcase-dots .dot');
+        let currentSlide = 0;
+        let slideInterval;
+
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Deactivate all dots
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show the selected slide
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        // Function to move to the next slide
+        function nextSlide() {
+            const newIndex = (currentSlide + 1) % slides.length;
+            showSlide(newIndex);
+        }
+        
+        // Start auto-sliding
+        slideInterval = setInterval(nextSlide, 5000);
+        
+        // Add click event listeners to dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                showSlide(index);
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 5000);
             });
         });
     </script>

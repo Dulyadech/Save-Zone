@@ -49,7 +49,6 @@ function setupEventListeners() {
     });
     
     // Export
-    document.getElementById('save-project').addEventListener('click', saveProject);
     document.getElementById('export-formations').addEventListener('click', exportFormations);
     
     // Note: Timeline controls event listeners removed
@@ -442,28 +441,6 @@ function repositionDancers() {
     renderCurrentFormation();
 }
 
-// Save project data
-function saveProject() {
-    const projectData = {
-        dancers: dancers,
-        formations: formations,
-        stageWidth: document.getElementById('stage-width').value,
-        stageHeight: document.getElementById('stage-height').value
-    };
-    
-    const dataStr = JSON.stringify(projectData);
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-    
-    const exportName = 'savezone_project_' + new Date().toISOString().slice(0, 10);
-    
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportName + '.json');
-    linkElement.click();
-    
-    alert('Project saved successfully!');
-}
-
 // Export formations to preview
 function exportFormations() {
     // Save to local storage for preview page to access
@@ -475,7 +452,7 @@ function exportFormations() {
     }));
     
     // Redirect to preview page
-    window.location.href = 'preview_&_edit.html';
+    window.location.href = '/previews';
 }
 
 // Add window resize listener to adjust stage cell size
