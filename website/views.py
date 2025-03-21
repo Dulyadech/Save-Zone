@@ -1,9 +1,8 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Response
+from flask import Blueprint, render_template, request, flash, redirect, send_from_directory, url_for, Response, jsonify
 from flask_login import login_required, current_user
-import os
-import json
+import json, sqlite3, base64, os
 from werkzeug.utils import secure_filename
-from .processvideo import process_and_save_video
+from .processvideo import process_and_save_video, check_positions_in_zones
 from . import db
 from .models import VideoUpload, VideoImage, Zone
 
@@ -68,120 +67,49 @@ def create():
     if request.method == 'POST':
         video_id = request.form.get('video_id')
         zone_name = request.form.get('zone_name')
-        zone_description = request.form.get('zone_description')
-        zone_coordinates = request.form.get('zone_coordinates')
+        description = request.form.get('zone_description', '')  # Optional field
+        coordinates = request.form.get('zone_coordinates')
         is_dance_position = True if request.form.get('is_dance_position') == 'yes' else False
         frame_reference = request.form.get('frame_reference')
         
         # Validate inputs
-        if not all([video_id, zone_name, zone_coordinates]):
+        if not all([video_id, zone_name, coordinates]):
             flash('Please fill in all required fields', 'danger')
         else:
             # Parse the coordinates to ensure they're valid JSON
             try:
-                json.loads(zone_coordinates)
+                coordinate_data = json.loads(coordinates)
+                
+                # Create a new zone
+                new_zone = Zone(
+                    name=zone_name,
+                    description=description,
+                    coordinates=coordinates,
+                    normalized_coordinates=coordinates,  # Assuming coordinates are already normalized
+                    is_dance_position=is_dance_position,
+                    frame_reference=frame_reference,
+                    user_id=current_user.id,
+                    video_id=int(video_id)
+                )
+                db.session.add(new_zone)
+                db.session.commit()
+                
+                flash('Zone created successfully!', 'success')
+                return redirect(url_for('views.previews'))
+                
             except json.JSONDecodeError:
                 flash('Invalid coordinates format. Please use valid JSON.', 'danger')
-                return render_template('create.html', videos=videos)
-            
-            # Create normalized coordinates based on frame dimensions
-            reference_frame = VideoImage.query.filter_by(video_id=video_id, frame_number=frame_reference).first()
-            normalized_coordinates = zone_coordinates  # Default if no frame is found
-            
-            if reference_frame:
-                # For this example, we'll assume zone_coordinates is already normalized
-                # In a real application, you might need to convert from pixel coordinates to normalized
-                normalized_coordinates = zone_coordinates
-            
-            new_zone = Zone(
-                name=zone_name,
-                description=zone_description,
-                coordinates=zone_coordinates,
-                normalized_coordinates=normalized_coordinates,
-                is_dance_position=is_dance_position,
-                frame_reference=frame_reference,
-                user_id=current_user.id,
-                video_id=video_id
-            )
-            db.session.add(new_zone)
-            db.session.commit()
-            
-            flash('Zone created successfully!', 'success')
-            return redirect(url_for('views.previews'))
     
     return render_template('create.html', videos=videos)
 
 @views.route('/previews')
 @login_required
 def previews():
-    videos = VideoUpload.query.filter_by(user_id=current_user.id).all()
-    
-    # Prepare data for template
-    video_data = []
-    for video in videos:
-        # Get a sample frame for each video if available
-        sample_frame = VideoImage.query.filter_by(video_id=video.id).first()
-        zones = Zone.query.filter_by(video_id=video.id).all()
-        
-        video_data.append({
-            'video': video,
-            'sample_frame': sample_frame,
-            'zones': zones,
-            'zone_count': len(zones)
-        })
-    
-    return render_template('preview_&_edit.html', video_data=video_data)
-
-@views.route('/video/<int:video_id>')
-@login_required
-def video_details(video_id):
-    video = VideoUpload.query.get_or_404(video_id)
-    
-    # Check if the user is authorized to view this video
-    if video.user_id != current_user.id and not current_user.is_admin:
-        flash('You are not authorized to view this video', 'danger')
-        return redirect(url_for('views.previews'))
-    
-    images = VideoImage.query.filter_by(video_id=video_id).order_by(VideoImage.sequence_number).all()
-    zones = Zone.query.filter_by(video_id=video_id).all()
-    
-    return render_template('video_details.html', video=video, images=images, zones=zones)
-
-@views.route('/video-stream/<int:video_id>')
-@login_required
-def video_stream(video_id):
-    video = VideoUpload.query.get_or_404(video_id)
-    
-    # Check if the user is authorized to view this video
-    if video.user_id != current_user.id and not current_user.is_admin:
-        flash('You are not authorized to view this video', 'danger')
-        return redirect(url_for('views.previews'))
-        
-    video_data = video.file_data
-    return Response(video_data, mimetype=video.content_type)
-
-@views.route('/image/<int:image_id>')
-@login_required
-def image_stream(image_id):
-    image = VideoImage.query.get_or_404(image_id)
-    
-    # Check if the user is authorized to view this image
-    video = VideoUpload.query.get(image.video_id)
-    if video.user_id != current_user.id and not current_user.is_admin:
-        flash('You are not authorized to view this image', 'danger')
-        return redirect(url_for('views.previews'))
-        
-    return Response(image.image_data, mimetype=image.content_type)
+    return render_template('preview_&_edit.html')
 
 @views.route('/about')
 def about():
     return render_template('about_us.html')
-<<<<<<< HEAD
-# Add this route to your views.py file
-
-import json
-import os
-from flask import jsonify, request, Blueprint
 
 @views.route('/save-positions', methods=['POST'])
 @login_required
@@ -189,93 +117,90 @@ def save_positions():
     try:
         # Get the updated positions data from the request
         updated_data = request.json
+        video_id = request.args.get('video_id')
         
         # Validate the data structure
-        if not updated_data:
-            return jsonify({'status': 'error', 'message': 'No data provided'}), 400
-            
-        # Path to the coordinates JSON file
-        json_path = 'website/static/data/coordinates.json'
+        if not updated_data or not video_id:
+            return json.dumps({'status': 'error', 'message': 'Missing data or video_id'}), 400
         
-        # Check if the file exists
-        if not os.path.exists(json_path):
-            return jsonify({'status': 'error', 'message': 'Coordinates file not found'}), 404
-            
-        # Save the updated data to the file
-        with open(json_path, 'w') as json_file:
-            json.dump(updated_data, json_file, indent=4)
-            
-        # Create a new zone entry in the database (optional based on your app logic)
-        # This would store the updated positions as a "dance zone" if needed
+        # Extract position data and store in database
         if request.args.get('save_as_zone') == 'true':
-            video_id = request.args.get('video_id')
-            if video_id:
-                # Convert positions to zone coordinates format
-                position_data = {}
-                for frame_key, frame_data in updated_data.items():
-                    people_positions = []
-                    for item in frame_data:
-                        if item.get('person_id'):
-                            people_positions.append({
-                                'id': item['person_id'],
-                                'x': item['coordinates']['normalized']['x'],
-                                'y': item['coordinates']['normalized']['y']
-                            })
-                    position_data[frame_key] = people_positions
+            # Convert the updated data format to a zone-friendly format
+            position_data = {}
+            for frame_key, frame_data in updated_data.items():
+                people_positions = []
+                for item in frame_data:
+                    if isinstance(item, dict) and item.get('person_id'):
+                        people_positions.append({
+                            'id': item['person_id'],
+                            'x': item['coordinates']['normalized']['x'],
+                            'y': item['coordinates']['normalized']['y']
+                        })
                 
-                # Create a new zone
-                new_zone = Zone(
-                    name=f"Dance Position {current_user.username}",
-                    description="Generated from edited positions",
-                    coordinates=json.dumps(position_data),
-                    is_dance_position=True,
-                    user_id=current_user.id,
-                    video_id=int(video_id)
-                )
-                db.session.add(new_zone)
-                db.session.commit()
+                if people_positions:
+                    position_data[frame_key] = people_positions
+            
+            # Create a new zone with the position data
+            new_zone = Zone(
+                name=f"Dance Position {current_user.username}",
+                description="Generated from edited positions",
+                coordinates=json.dumps(position_data),
+                normalized_coordinates=json.dumps(position_data),
+                is_dance_position=True,
+                user_id=current_user.id,
+                video_id=int(video_id)
+            )
+            db.session.add(new_zone)
+            db.session.commit()
         
-        return jsonify({'status': 'success', 'message': 'Positions saved successfully'})
+        return json.dumps({'status': 'success', 'message': 'Positions saved successfully'})
     
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-=======
+        return json.dumps({'status': 'error', 'message': str(e)}), 500
 
-@views.route('/analyze/<int:video_id>')
+
+
+DATABASE_PATH = os.path.join(os.getcwd(), 'instance', 'database.db')
+
+@views.route('/get-data', methods=['GET'])
 @login_required
-def analyze_video(video_id):
-    video = VideoUpload.query.get_or_404(video_id)
+def get_data():
+    # เชื่อมต่อกับฐานข้อมูล SQLite
+    conn = sqlite3.connect(DATABASE_PATH)
+    cursor = conn.cursor()
+    latest_video = VideoUpload.query.filter_by(user_id=current_user.id, processed=True).order_by(VideoUpload.upload_date.desc()).first()
     
-    # Check if the user is authorized to analyze this video
-    if video.user_id != current_user.id and not current_user.is_admin:
-        flash('You are not authorized to analyze this video', 'danger')
-        return redirect(url_for('views.previews'))
+    if latest_video:
+        latest_video_id = latest_video.id
+    else:
+        latest_video_id = None
+
+    if latest_video_id:
+        zone_data = []
+        rows = cursor.execute("SELECT coordinates FROM zone WHERE video_id = ?", (latest_video.id,)).fetchall()
+        for row in rows:
+            try:
+                zone = json.loads(row[0])
+            except Exception as e:
+                print("Error parsing JSON from zone:", e)
+            if row[0]:
+                zone_data.append(zone)
+    else:
+        zone_data = []
     
-    # Check if video has been processed
-    if not video.processed:
-        flash('This video has not been processed yet.', 'warning')
-        return redirect(url_for('views.video_details', video_id=video_id))
-    
-    # Load frame data
-    frames = VideoImage.query.filter_by(video_id=video_id).order_by(VideoImage.sequence_number).all()
-    zones = Zone.query.filter_by(video_id=video_id).all()
-    
-    # Prepare data for visualization
-    frame_data = []
-    for frame in frames:
-        pose_data = json.loads(frame.pose_data) if frame.pose_data else []
-        
-        frame_info = next((item for item in pose_data if "frame_info" in item), {})
-        persons = [item for item in pose_data if "person_id" in item]
-        
-        frame_data.append({
-            'id': frame.id,
-            'sequence': frame.sequence_number,
-            'timestamp': frame.timestamp,
-            'persons': len(persons),
-            'image_path': frame.image_path,
-            'pose_data': persons
-        })
-    
-    return render_template('analyze.html', video=video, frames=frame_data, zones=zones)
->>>>>>> 325bfb5d3b191d1fd7170c37811fa56fbf6be9a2
+            
+
+    if latest_video_id:
+        images_base64 = []
+        rows = cursor.execute("SELECT image_data FROM video_image WHERE video_id = ?", (latest_video_id,)).fetchall()
+        for row in rows:
+            if row[0]:
+                img_base64 = base64.b64encode(row[0]).decode('utf-8')
+                img_data_url = f"data:image/png;base64,{img_base64}"
+                images_base64.append(img_data_url)
+    else:
+        images_base64 = []
+
+    conn.close()
+
+    return jsonify(images=images_base64, zones=zone_data)

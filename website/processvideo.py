@@ -1,7 +1,10 @@
-import cv2, numpy as np, mediapipe as mp, os, json
-from datetime import datetime
+import cv2, numpy as np, mediapipe as mp, json, io
+from datetime import datetime, timedelta
 from . import db
 from .models import VideoUpload, VideoImage, Zone
+
+utc_time = datetime.utcnow()
+gmt_plus_7_time = utc_time + timedelta(hours=7)
 
 def get_rectangle_bottom_center_coordinates(boxes, indices, frame_width, frame_height):
     """
@@ -36,8 +39,6 @@ def get_rectangle_bottom_center_coordinates(boxes, indices, frame_width, frame_h
 
 def process_and_save_video(
     video_id,
-    output_dir="website/static/output_images",
-    output_json_path="website/static/data/coordinates.json",
     yolo_base_path="website/yolo",
     process_interval_seconds=2,
     max_process_seconds=None,  # Set to None to process the entire video
@@ -48,8 +49,6 @@ def process_and_save_video(
     
     Args:
         video_id (int): Database ID of the video to process
-        output_dir (str): Directory to save output images
-        output_json_path (str): Path to save the output JSON data
         yolo_base_path (str): Base path for YOLO model files
         process_interval_seconds (int): Process a frame every N seconds
         max_process_seconds (int, optional): Stop processing after this many seconds.
@@ -65,26 +64,19 @@ def process_and_save_video(
         print(f"Error: Video with ID {video_id} not found in database")
         return False
     
-    # Create a temporary file from the binary data
-    temp_video_path = os.path.join(output_dir, f"temp_{video_id}.mp4")
-    os.makedirs(output_dir, exist_ok=True)
-    with open(temp_video_path, 'wb') as temp_file:
-        temp_file.write(video_record.file_data)
-    
-    # Ensure output directories exist
-    os.makedirs(os.path.dirname(output_json_path), exist_ok=True)
-    
-    # Initialize pose data dictionary
-    pose_data = {}
+    # Create video buffer from binary data
+    video_buffer = io.BytesIO(video_record.file_data)
     
     # Load YOLO files
-    config_path = os.path.join(yolo_base_path, "yolov3.cfg")
-    weights_path = os.path.join(yolo_base_path, "yolov3.weights")
-    names_path = os.path.join(yolo_base_path, "coco.names")
+    config_path = f"{yolo_base_path}/yolov3.cfg"
+    weights_path = f"{yolo_base_path}/yolov3.weights"
+    names_path = f"{yolo_base_path}/coco.names"
     
     # Check if YOLO files exist
+    import os
     if not all(os.path.exists(p) for p in [config_path, weights_path, names_path]):
         print(f"Error: YOLO model files not found in {yolo_base_path}")
+        # Ensure directory exists
         os.makedirs(yolo_base_path, exist_ok=True)
         # You might want to add code to download YOLO files if they don't exist
         return False
@@ -110,10 +102,18 @@ def process_and_save_video(
     mp_pose = mp.solutions.pose
     mp_drawing = mp.solutions.drawing_utils
     
+    # Write video buffer to a temporary file that OpenCV can read
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
+        temp_file.write(video_record.file_data)
+        temp_video_path = temp_file.name
+    
     # Open the video
     cap = cv2.VideoCapture(temp_video_path)
     if not cap.isOpened():
-        print(f"Error: Could not open video {temp_video_path}")
+        print(f"Error: Could not open video from buffer")
+        # Clean up temporary file
+        os.unlink(temp_video_path)
         return False
         
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -153,19 +153,9 @@ def process_and_save_video(
                 
                 height, width, _ = frame.shape
                 frame_key = f"frame_{processed_count}"  # Key using sequential number
-                pose_data[frame_key] = []
                 
-                # Store frame dimensions and information
-                frame_info = {
-                    "frame_info": {
-                        "width": width,
-                        "height": height,
-                        "frame_number": frame_count,
-                        "timestamp": frame_count / fps,  # Time in seconds
-                        "sequence_number": processed_count  # Sequential number
-                    }
-                }
-                pose_data[frame_key].append(frame_info)
+                # Make a copy of the original frame for visualization (if needed)
+                visualization_frame = frame.copy()
                 
                 # Prepare the frame for YOLO model
                 blob = cv2.dnn.blobFromImage(
@@ -213,8 +203,11 @@ def process_and_save_video(
                     height
                 )
                 
-                person_detections = []
-                
+                pose_data = []
+
+                ref_frame = {"frame_reference" : processed_count}
+                pose_data.append(ref_frame)
+
                 # Process detected people
                 if indices is not None and len(indices) > 0:
                     for i, (normalized_x, normalized_y, original_x, original_y) in enumerate(bottom_center_coords):
@@ -222,66 +215,62 @@ def process_and_save_video(
                         person_info = {
                             "person_id": i + 1,
                             "coordinates": {
-                                "normalized": {
                                     "x": normalized_x,
                                     "y": normalized_y
-                                },
-                                "original": {
-                                    "x": int(original_x),
-                                    "y": int(original_y)
-                                }
                             }
                         }
-                        pose_data[frame_key].append(person_info)
-                        person_detections.append(person_info)
+                        pose_data.append(person_info)
                         
-                        # Extract person ROI and detect pose
+                        # Draw bounding box and label on the visualization frame only
+                        # No more drawing on the original frame that will be saved
                         box_idx = indices.flatten()[i]
                         x, y, w, h = boxes[box_idx]
-                        person_roi = frame[y:y+h, x:x+w]
                         
-                        # Process with MediaPipe
-                        if person_roi.size > 0:  # Check if ROI is not empty
-                            roi_rgb = cv2.cvtColor(person_roi, cv2.COLOR_BGR2RGB)
-                            roi_rgb.flags.writeable = False
-                            results = pose.process(roi_rgb)
-                            roi_rgb.flags.writeable = True
-                    
-                # Save the processed frame with sequential numbering
-                frame_filename = f"frame_{video_id}_{processed_count}.jpg"
+                        # Draw bounding box and label on the visualization frame (not the frame to be saved)
+                        cv2.rectangle(visualization_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        cv2.putText(visualization_frame, f"Person {i+1}", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                 
-                # Save to database - create a new VideoImage record
-                try:
-                    success, encoded_frame = cv2.imencode('.jpg', frame)
-                    if success:
+                # Encode the original frame (without boxes) to JPEG
+                success, encoded_frame = cv2.imencode('.jpg', frame)
+                
+                if success:
+                    # Save to database - create a new VideoImage record
+                    try:
                         image_binary = encoded_frame.tobytes()
-                    
-                    # Create VideoImage record
-                    video_image = VideoImage(
-                        filename=frame_filename,
-                        content_type='image/jpeg',
-                        image_data=image_binary,
-                        image_size=len(image_binary),
-                        timestamp=frame_count / fps,
-                        frame_info=json.dumps(frame_info[frame_key]),
-                        width=width,
-                        height=height,
-                        person_count=len(person_detections) if indices is not None else 0,
-                        video_id=video_id
-                    )
-                    
-                    db.session.add(video_image)
-                    db.session.commit()
-                    
-                except Exception as e:
-                    print(f"Error saving frame to database: {e}")
-                    db.session.rollback()
+                        frame_filename = f"frame_{video_id}_{processed_count}.jpg"
+                        
+                        # Create VideoImage record
+                        video_image = VideoImage(
+                            filename=frame_filename,
+                            content_type='image/jpeg',
+                            image_data=image_binary,
+                            image_size=len(image_binary),
+                            timestamp=frame_count / fps,
+                            width=width,
+                            height=height,
+                            person_count=len(bottom_center_coords) if indices is not None else 0,
+                            video_id=video_id
+                        )
+
+                        zone = Zone(
+                            frame_reference = processed_count,
+                            coordinates=json.dumps(pose_data),
+                            video_id=video_id
+                        )
+                        
+                        db.session.add(video_image)
+                        db.session.add(zone)
+                        db.session.commit()
+                        
+                    except Exception as e:
+                        print(f"Error saving frame to database: {e}")
+                        db.session.rollback()
                 
                 # Print progress
                 if max_frames:
-                    print(f"Processing: {frame_count}/{max_frames} frames ({frame_count/max_frames*100:.1f}%) - Saved as {frame_filename}")
+                    print(f"Processing: {frame_count}/{max_frames} frames ({frame_count/max_frames*100:.1f}%)")
                 else:
-                    print(f"Processing: {frame_count}/{total_frames} frames ({frame_count/total_frames*100:.1f}%) - Saved as {frame_filename}")
+                    print(f"Processing: {frame_count}/{total_frames} frames ({frame_count/total_frames*100:.1f}%)")
             
             # Exit the loop if 'q' is pressed
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -292,12 +281,10 @@ def process_and_save_video(
     cv2.destroyAllWindows()
     
     # Remove the temporary video file
-    if os.path.exists(temp_video_path):
-        os.remove(temp_video_path)
-    
-    # Save the full JSON data
-    with open(output_json_path, "w") as json_file:
-        json.dump(pose_data, json_file, indent=4)
+    try:
+        os.unlink(temp_video_path)
+    except:
+        pass
     
     # Update the video record to mark as processed
     try:
@@ -326,7 +313,7 @@ def check_positions_in_zones(video_id, threshold_distance=0.1):
     zones = Zone.query.filter_by(video_id=video_id).all()
     
     # Get all processed frames for this video
-    images = VideoImage.query.filter_by(video_id=video_id).order_by(VideoImage.sequence_number).all()
+    images = VideoImage.query.filter_by(video_id=video_id).order_by(VideoImage.timestamp).all()
     
     stats = {
         "total_frames": len(images),
@@ -344,13 +331,13 @@ def check_positions_in_zones(video_id, threshold_distance=0.1):
     
     # For each frame, check if any detected person is in any zone
     for image in images:
-        # Parse the pose data from JSON
+        # Parse the frame info from JSON
         try:
-            pose_data = json.loads(image.pose_data)
+            frame_data = json.loads(image.frame_info)
             
             # Extract person positions
             person_positions = []
-            for item in pose_data:
+            for item in frame_data:
                 if isinstance(item, dict) and "person_id" in item:
                     # Get normalized coordinates
                     normalized_x = item["coordinates"]["normalized"]["x"]
@@ -360,24 +347,22 @@ def check_positions_in_zones(video_id, threshold_distance=0.1):
             # Check each person against each zone
             for zone in zones:
                 try:
-                    zone_coords = json.loads(zone.normalized_coordinates) if zone.normalized_coordinates else json.loads(zone.coordinates)
+                    zone_coords = None
+                    if zone.normalized_coordinates:
+                        zone_coords = json.loads(zone.normalized_coordinates)
+                    elif hasattr(zone, 'coordinates') and zone.coordinates:
+                        zone_coords = json.loads(zone.coordinates)
                     
-                    # For each person, check if they're in the zone
-                    for pos_x, pos_y, person_id in person_positions:
-                        if is_point_in_zone(pos_x, pos_y, zone_coords, threshold_distance):
-                            # Update zone trigger count
-                            stats["zone_triggers"][zone.id]["trigger_count"] += 1
-                            
-                            # Update database zone information
-                            zone.trigger_count += 1
-                            zone.last_triggered = datetime.utcnow()
-                            
-                            # Commit the changes
-                            try:
-                                db.session.commit()
-                            except Exception as e:
-                                print(f"Error updating zone trigger: {e}")
-                                db.session.rollback()
+                    if zone_coords:
+                        # For each person, check if they're in the zone
+                        for pos_x, pos_y, person_id in person_positions:
+                            if is_point_in_zone(pos_x, pos_y, zone_coords, threshold_distance):
+                                # Update zone trigger count
+                                stats["zone_triggers"][zone.id]["trigger_count"] += 1
+                                
+                                # Add trigger information to database if needed
+                                # This could be tracked in a new model if needed
+                                
                 except json.JSONDecodeError:
                     print(f"Error parsing zone coordinates for zone {zone.id}")
         
@@ -458,12 +443,3 @@ def point_to_line_distance(px, py, x1, y1, x2, y2):
     
     # Return distance to closest point
     return np.sqrt((px - proj_x)**2 + (py - proj_y)**2)
-
-if __name__ == "__main__":
-    # This block executes only if the script is run directly (not imported)
-    import sys
-    if len(sys.argv) > 1:
-        video_id = int(sys.argv[1])
-        process_and_save_video(video_id)
-    else:
-        print("Please provide a video ID as a command-line argument")
