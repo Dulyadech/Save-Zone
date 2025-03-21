@@ -193,6 +193,23 @@ canvas {
         <a href="{{ url_for('views.previews') }}" class="menu">Preview & Edit</a>
       </li>
       <li><a href="{{ url_for('views.about') }}">About us</a></li>
+      {% if current_user.is_authenticated %}
+            <li class="user-menu">
+                <a href="{{ url_for('auth.profile') }}">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <span class="username">{{ current_user.username }}</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('auth.profile') }}">Profile</a>
+                    {% if current_user.is_admin %}
+                    <a href="{{ url_for('auth.admin') }}">Admin</a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </div>
+            </li>
+            {% else %}
+            <li><a href="{{ url_for('auth.login') }}" class="auth-link"><ion-icon name="person-circle-outline"></ion-icon></a></li>
+            {% endif %}
     </ul>
   </nav>
   <div class="elements">
