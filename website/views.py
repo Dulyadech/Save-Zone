@@ -176,6 +176,70 @@ def image_stream(image_id):
 @views.route('/about')
 def about():
     return render_template('about_us.html')
+<<<<<<< HEAD
+# Add this route to your views.py file
+
+import json
+import os
+from flask import jsonify, request, Blueprint
+
+@views.route('/save-positions', methods=['POST'])
+@login_required
+def save_positions():
+    try:
+        # Get the updated positions data from the request
+        updated_data = request.json
+        
+        # Validate the data structure
+        if not updated_data:
+            return jsonify({'status': 'error', 'message': 'No data provided'}), 400
+            
+        # Path to the coordinates JSON file
+        json_path = 'website/static/data/coordinates.json'
+        
+        # Check if the file exists
+        if not os.path.exists(json_path):
+            return jsonify({'status': 'error', 'message': 'Coordinates file not found'}), 404
+            
+        # Save the updated data to the file
+        with open(json_path, 'w') as json_file:
+            json.dump(updated_data, json_file, indent=4)
+            
+        # Create a new zone entry in the database (optional based on your app logic)
+        # This would store the updated positions as a "dance zone" if needed
+        if request.args.get('save_as_zone') == 'true':
+            video_id = request.args.get('video_id')
+            if video_id:
+                # Convert positions to zone coordinates format
+                position_data = {}
+                for frame_key, frame_data in updated_data.items():
+                    people_positions = []
+                    for item in frame_data:
+                        if item.get('person_id'):
+                            people_positions.append({
+                                'id': item['person_id'],
+                                'x': item['coordinates']['normalized']['x'],
+                                'y': item['coordinates']['normalized']['y']
+                            })
+                    position_data[frame_key] = people_positions
+                
+                # Create a new zone
+                new_zone = Zone(
+                    name=f"Dance Position {current_user.username}",
+                    description="Generated from edited positions",
+                    coordinates=json.dumps(position_data),
+                    is_dance_position=True,
+                    user_id=current_user.id,
+                    video_id=int(video_id)
+                )
+                db.session.add(new_zone)
+                db.session.commit()
+        
+        return jsonify({'status': 'success', 'message': 'Positions saved successfully'})
+    
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+=======
 
 @views.route('/analyze/<int:video_id>')
 @login_required
@@ -214,3 +278,4 @@ def analyze_video(video_id):
         })
     
     return render_template('analyze.html', video=video, frames=frame_data, zones=zones)
+>>>>>>> 325bfb5d3b191d1fd7170c37811fa56fbf6be9a2
