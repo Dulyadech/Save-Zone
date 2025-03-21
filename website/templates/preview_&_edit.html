@@ -12,6 +12,7 @@
   <title>Document</title>
   <style>
     body {
+      background-color: #1e1e1e;
       background-color: #000000;
       color: white;
       text-align: center;
@@ -30,6 +31,7 @@
 
     .frame-info {
       position: relative;
+      width: 100%;
     }
 
     .circle {
@@ -60,6 +62,8 @@
       justify-content: center;
       align-items: center;
       gap: 20px;
+      width: 90%;
+      margin: 20px auto auto;
       margin-top: 20px;
     }
 
@@ -69,17 +73,24 @@
       background: rgba(255, 255, 255, 0.1);
       padding: 15px;
       border-radius: 10px;
+      width: 100%;
       width: 90%;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     .image-container {
+      width: 100%;
       text-align: center;
     }
 
     img {
       max-width: 90%;
       border-radius: 8px;
+      object-fit: cover;
+    }
+
+    canvas {
+      width: 100%;
     }
 
     canvas {
