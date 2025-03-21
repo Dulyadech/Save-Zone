@@ -1,23 +1,22 @@
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- Keep your existing head content -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- link homepage -->
     <link rel="stylesheet" href="../static/css/style.css">
-    <!-- link nav bar -->
     <link rel="stylesheet" href="../static/css/navbar.css">
-    <!-- import remix icon package -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-    <!-- import ion icon package -->
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
     <title>Save Zone</title>
 </head>
 
 <body>
-    <!-- nav bar -->
+    <!-- Keep your existing nav bar -->
     <nav>
         <!-- save zone small logo -->
         <a href="{{ url_for('views.home') }}" class="logo-container">
@@ -56,33 +55,92 @@
             {% endif %}
         </ul>
     </nav>
-    <!-- elements -->
-    <div class="elements">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
         <!-- background -->
         <div class="circle purple"></div>
         <div class="circle pink"></div>
         <!-- save zone big logo -->
-        <div class="big_logo"><img src="../static/images/save zone.png" alt="Big Logo"></div>
+        <div class="big_logo_container">
+            <!-- <div class="sparkles-container">
+                <span class="sparkle s1"></span>
+                <span class="sparkle s2"></span>
+                <span class="sparkle s3"></span>
+                <span class="sparkle s4"></span>
+                <span class="sparkle s5"></span>
+                <span class="sparkle s6"></span>
+                <span class="sparkle s7"></span>
+                <span class="sparkle s8"></span>
+            </div> -->
+            <div class="big_logo"><img src="../static/images/save zone.png" alt="Big Logo"></div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <p>Scroll Down</p>
+            <ion-icon name="chevron-down-outline" class="scroll-icon"></ion-icon>
+        </div>
     </div>
 
+    <!-- Featured Content Section -->
+    <section class="featured-content">
+        <h2>Welcome to Save Zone</h2>
+        <div class="content-carousel">
+            <!-- Sample content cards -->
+            <div class="content-card">
+                <img src="../static/images/upload-page.png" alt="Featured Content">
+                <div class="card-overlay">
+                    <h3>Upload</h3>
+                    <p>Description of the project</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <img src="../static/images/create-page.png" alt="Featured Content">
+                <div class="card-overlay">
+                    <h3>Create</h3>
+                    <p>Description of the project</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <img src="../static/images/preview-page.png" alt="Featured Content">
+                <div class="card-overlay">
+                    <h3>Preview and Edit</h3>
+                    <p>Description of the project</p>
+                </div>
+            </div>
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
 
-    <div class="button">
-        <!-- upload button -->
-        <a href="{{ url_for('views.upload') }}" button class="Upload">
-            <p>Upload</p>
-            <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
-        </a>
-        <!-- Or text between button -->
-        <span class="Or">
-            <p>or</p>
-        </span>
-        <!-- create button -->
-        <a href="{{ url_for('views.create') }}" button class="Create">
-            <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
-        </a>
-    </div>
-
-    <section>
+    <!-- Action Section -->
+    <section class="action-section">
+        <div class="info-column">
+            <h2>Create your zone easily and save-time</h2>
+            <!-- <p>Create your zone easily and save-time.</p> -->
+            <ul class="feature-list">
+                <li><ion-icon name="checkbox-outline"></ion-icon> Easy audio zone creation</li>
+                <li><ion-icon name="checkbox-outline"></ion-icon> Upload and edit existing videos</li>
+                <li><ion-icon name="checkbox-outline"></ion-icon> Professional audio management</li>
+                <li><ion-icon name="checkbox-outline"></ion-icon> Preview and export your work</li>
+            </ul>
+        </div>
+        
+        <div class="button-column">
+            <!-- upload button -->
+            <a href="{{ url_for('views.upload') }}" button class="Upload">
+                <p>Upload</p>
+                <ion-icon name="arrow-up-outline" class="Upload-icon"></ion-icon>
+            </a>
+            <!-- Or text between button -->
+            <span class="Or">
+                <p>or</p>
+            </span>
+            <!-- create button -->
+            <a href="{{ url_for('views.create') }}" button class="Create">
+                <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
+            </a>
+        </div>
     </section>
 
     <!-- Flash messages container -->
@@ -119,7 +177,13 @@
                 }, 500);
             });
         }, 5000);
+        
+        // Smooth scroll for scroll indicator
+        document.querySelector('.scroll-indicator').addEventListener('click', function() {
+            document.querySelector('.featured-content').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
     </script>
 </body>
-
 </html>
