@@ -1,116 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/preview_&_edit.css" />
-    <link rel="stylesheet" href="../static/css/navbar.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"
-    ></script>
-    <title>Document</title>
-    <style>
-      body {
-        background-color: #1e1e1e;
-        color: white;
-        text-align: center;
-      }
 
-      .frame-info::after {
-        content: '';
-        width: 3px;
-        height: 100%;
-        background-color: black;
-        display: flex;
-        position: absolute;
-        right: 2.2%;
-        top: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../static/css/preview_&_edit.css" />
+  <link rel="stylesheet" href="../static/css/navbar.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #000000;
+      color: white;
+      text-align: center;
+    }
 
-      .frame-info {
-        position: relative;
-      }
+    .frame-info::after {
+      content: '';
+      width: 3px;
+      height: 100%;
+      background-color: black;
+      display: flex;
+      position: absolute;
+      right: 2.2%;
+      top: 0;
+    }
 
-      .circle {
-        z-index: -99;
-      }
+    .frame-info {
+      position: relative;
+    }
 
-      h1 {
-        margin-top: 110px;
-      }
+    .circle {
+      z-index: -99;
+      border-radius: 100%;
+      height: 180vh;
+      width: 180vh;
+      opacity: 0.5;
+      position: fixed;
+      top: 300px;
+    }
 
-      .container {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        margin-top: 20px;
-      }
+    h1 {
+      margin-top: 110px;
+      font-weight: 100px;
+      margin-bottom: 40px;
+      font-size: 3rem;
+      color: linear-gradient(90deg, #8003bb, #ff00a1);
+      background: linear-gradient(90deg, #9900ff, #ff00a1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-      .frame {
-        display: flex;
-        flex-direction: row;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 15px;
-        border-radius: 10px;
-        width: 90%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
 
-      .image-container {
-        text-align: center;
-      }
+    .frame {
+      display: flex;
+      flex-direction: row;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-      img {
-        max-width: 90%;
-        border-radius: 8px;
-      }
+    .image-container {
+      text-align: center;
+    }
 
-      canvas {
-        width: 80%;
-        border-radius: 8px;
-      }
-    </style>
-  </head>
+    img {
+      max-width: 90%;
+      border-radius: 8px;
+    }
 
-  <body>
-    <nav>
-      <a href="{{ url_for('views.home') }}" class="logo-container">
-        <div class="logo">Save Zone</div>
-        <ion-icon name="musical-note-outline"></ion-icon>
-      </a>
-      <ul>
-        <li><a href="{{ url_for('views.upload') }}">Upload</a></li>
-        <li><a href="{{ url_for('views.create') }}">Create</a></li>
-        <li>
-          <a href="{{ url_for('views.previews') }}" class="menu"
-            >Preview & Edit</a
-          >
-        </li>
-        <li><a href="{{ url_for('views.about') }}">About us</a></li>
-      </ul>
-    </nav>
-    <div class="elements">
-      <div class="circle purple"></div>
-      <div class="circle pink"></div>
-    </div>
+    canvas {
+      width: 80%;
+      border-radius: 8px;
+    }
+  </style>
+</head>
 
-    <h1><i class="ri-dance-fill"></i>Previews</h1>
-    <div class="container"></div>
+<body>
+  <nav>
+    <a href="{{ url_for('views.home') }}" class="logo-container">
+      <div class="logo">Save Zone</div>
+      <ion-icon name="musical-note-outline"></ion-icon>
+    </a>
+    <ul>
+      <li><a href="{{ url_for('views.upload') }}">Upload</a></li>
+      <li><a href="{{ url_for('views.create') }}">Create</a></li>
+      <li>
+        <a href="{{ url_for('views.previews') }}" class="menu">Preview & Edit</a>
+      </li>
+      <li><a href="{{ url_for('views.about') }}">About us</a></li>
+    </ul>
+  </nav>
+  <div class="elements">
+    <div class="circle purple"></div>
+    <div class="circle pink"></div>
+  </div>
 
-    <section></section>
-    <script src="../static/js/preview.js"></script>
-    <script src="../static/js/script.js"></script>
-  </body>
+  <h1><i class="ri-dance-fill"></i>Previews</h1>
+  <div class="container"></div>
+
+  <section></section>
+  <script src="../static/js/preview.js"></script>
+  <script src="../static/js/script.js"></script>
+</body>
+
 </html>

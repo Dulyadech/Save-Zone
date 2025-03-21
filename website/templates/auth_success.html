@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Successful</title>
+    <style>
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(90deg, #8003bb, #ff00a1);
+            color: white;
+            text-align: center;
+            padding-top: 20vh;
+            margin: 0;
+            height: 100vh;
+        }
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-icon">✓</div>
+    <div class="message">Login Successful!</div>
+    <p>Redirecting you...</p>
+    
+    <script>
+        // Send message to parent window that auth was successful
+        window.onload = function() {
+            try {
+                // First try to notify the parent window
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage('auth-success', '*');
+                }
+            } catch (e) {
+                console.error('Could not communicate with parent window:', e);
+            }
+            
+            // After a short delay, redirect to home
+            setTimeout(function() {
+                window.location.href = "{{ url_for('views.home') }}";
+            }, 1500);
+        };
+    </script>
+</body>
+</html>

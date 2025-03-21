@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Save Zone</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth-styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h3>Login</h3>
+                <p>Welcome back please login to your account</p>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    <span class="input-icon"><i class="ri-mail-line"></i></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    <span class="input-icon toggle-password"><i class="ri-eye-off-line"></i></span>
+                </div>
+
+                <label class="checkbox-container">
+                    <input type="checkbox" id="remember" name="remember">
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Remember me</span>
+                </label>
+
+                <button type="submit" class="auth-button">Login</button>
+
+                <!-- <div class="auth-links">
+                    <a href="#" id="forgot-password">Forgot Password?</a>
+                </div> -->
+
+                <div class="divider"></div>
+
+                <div class="auth-links">
+                    Don't have an account? <a href="{{ url_for('auth.register') }}">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle password visibility
+        document.querySelector('.toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('ri-eye-off-line');
+                icon.classList.add('ri-eye-line');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('ri-eye-line');
+                icon.classList.add('ri-eye-off-line');
+            }
+        });
+    </script>
+</body>
+
+</html>
