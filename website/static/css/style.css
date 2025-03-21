@@ -51,7 +51,7 @@ body {
     justify-content: center;
     position: relative;
     text-align: center;
-    top: 530px;
+    top: 585px;
 }
 
 .Upload,
@@ -194,6 +194,7 @@ body {
     font-size: 3.2vh;
     color: white;
 }
+
 
 section {
     width: 100%;

@@ -8,6 +8,7 @@ let selectedDancer = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    stage = document.getElementById('stage'); // Re-select stage in case DOM wasn't fully loaded
     initializeStage();
     setupEventListeners();
 });
@@ -51,12 +52,7 @@ function setupEventListeners() {
     document.getElementById('save-project').addEventListener('click', saveProject);
     document.getElementById('export-formations').addEventListener('click', exportFormations);
     
-    // Timeline controls
-    document.getElementById('play-button').addEventListener('click', playAnimation);
-    document.getElementById('pause-button').addEventListener('click', pauseAnimation);
-    document.getElementById('timeline-slider').addEventListener('input', function() {
-        updateTimelinePosition(this.value);
-    });
+    // Note: Timeline controls event listeners removed
 }
 
 // Update the stage grid based on width and height
@@ -144,7 +140,7 @@ function addNewFormation() {
         id: formationId,
         name: `Formation ${formationId + 1}`,
         positions: {},
-        duration: 4.0 // Default duration in seconds
+        duration: 4.0 // Keep duration for data consistency, even though timeline is removed
     };
     
     // Set default positions for all dancers
@@ -160,7 +156,6 @@ function addNewFormation() {
     
     updateFormationsList();
     renderCurrentFormation();
-    updateTimeline();
 }
 
 // Duplicate the current formation
@@ -182,7 +177,6 @@ function duplicateCurrentFormation() {
     
     updateFormationsList();
     renderCurrentFormation();
-    updateTimeline();
 }
 
 // Update the dancers list in the UI
@@ -401,13 +395,13 @@ function editFormation(index) {
     if (newName !== null) {
         formation.name = newName;
         
+        // We keep the duration prompt for data consistency
         const newDuration = prompt('Enter duration in seconds:', formation.duration);
         if (newDuration !== null && !isNaN(newDuration) && parseFloat(newDuration) > 0) {
             formation.duration = parseFloat(newDuration);
         }
         
         updateFormationsList();
-        updateTimeline();
     }
 }
 
@@ -428,7 +422,6 @@ function removeFormation(index) {
     
     updateFormationsList();
     renderCurrentFormation();
-    updateTimeline();
 }
 
 // Reposition dancers when stage size changes
@@ -447,37 +440,6 @@ function repositionDancers() {
     });
     
     renderCurrentFormation();
-}
-
-// Update the timeline
-function updateTimeline() {
-    const totalDuration = formations.reduce((sum, formation) => sum + formation.duration, 0);
-    document.getElementById('total-time').textContent = formatTime(totalDuration);
-}
-
-// Format time as MM:SS
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-// Play animation of formations
-function playAnimation() {
-    console.log('Play animation');
-    // Implementation for playing through formations with transitions
-}
-
-// Pause animation
-function pauseAnimation() {
-    console.log('Pause animation');
-    // Implementation for pausing the animation
-}
-
-// Update timeline position
-function updateTimelinePosition(value) {
-    // Implementation for scrubbing through the timeline
-    console.log('Timeline position:', value);
 }
 
 // Save project data
