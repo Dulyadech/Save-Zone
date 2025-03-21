@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from . import db, bcrypt
-from .models import User
+from .models import User, VideoUpload, VideoImage, Zone
 
 auth = Blueprint('auth', __name__)
 
@@ -93,12 +93,16 @@ def profile():
 def create_admin():
     username = 'admin'
     email = 'admin@savezone'
-    password = 'sofiaispretty'
+    password = '!book@neptune#sofia$'
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    admin_user = User(username=username, email=email, password=hashed_password, is_admin=True)
-    db.session.add(admin_user)
-    db.session.commit()
-    return 'Admin user created successfully!'
+    if not current_user.is_admin == 1:
+        return redirect(url_for('home'))
+    if current_user.email is not 'admin@savezone':
+        admin_user = User(username=username, email=email, password=hashed_password, is_admin=True)
+        db.session.add(admin_user)
+        db.session.commit()
+        return '<h1>Admin user created successfully!</h1>'
+    return '<h1>Admin user has already created.</h1>'
 
 @auth.route('/admin')
 @login_required
@@ -110,5 +114,7 @@ def admin():
     
     # Get all users from the database
     users = User.query.all()
+
+    videos = VideoUpload.query.all()
     
-    return render_template('admin.html', users=users)
+    return render_template('admin.html', users=users, videos=videos)

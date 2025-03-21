@@ -15,7 +15,6 @@ class User(db.Model, UserMixin):
     
     # Relationships
     videos = db.relationship('VideoUpload', backref='owner', lazy=True)
-    zones = db.relationship('Zone', backref='creator', lazy=True)
     
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
@@ -34,7 +33,6 @@ class VideoUpload(db.Model):
     
     # Relationships
     images = db.relationship('VideoImage', backref='video', lazy=True)
-    zones = db.relationship('Zone', backref='video', lazy=True)
     
     def __repr__(self):
         return f"VideoUpload('{self.filename}', '{self.upload_date}', {self.file_size} bytes)"
@@ -46,9 +44,6 @@ class VideoImage(db.Model):
     image_data = db.Column(db.LargeBinary, nullable=False)  # Actual image binary data
     image_size = db.Column(db.Integer)  # Size in bytes
     timestamp = db.Column(db.Float)  # Time in seconds from the start of video
-    
-    # Store JSON data from processvideo.py
-    frame_info = db.Column(db.Text)  # Store pose detection data as JSON string
     
     # Dimensions
     width = db.Column(db.Integer)  # Frame width
@@ -65,25 +60,11 @@ class VideoImage(db.Model):
 
 class Zone(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text)
-    coordinates = db.Column(db.Text, nullable=False)  # Store as JSON string
-    is_dance_position = db.Column(db.Boolean, default=True)  # Changed from is_danger_zone
+    frame_reference = db.Column(db.Integer)  # Reference to which frame this zone is based on
+    coordinates = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # New fields to store data from processvideo.py
-    normalized_coordinates = db.Column(db.Text)  # Store normalized coordinates as JSON string
-    frame_reference = db.Column(db.Integer)  # Reference to which frame this zone is based on
-    
-    # Detection parameters
-    detection_threshold = db.Column(db.Float, default=0.5)  # Confidence threshold
-    
-    # Metadata
-    last_triggered = db.Column(db.DateTime)  # When this zone was last triggered
-    trigger_count = db.Column(db.Integer, default=0)  # How many times this zone was triggered
-    
     # Foreign keys
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     video_id = db.Column(db.Integer, db.ForeignKey('video_upload.id'), nullable=False)
     
     def __repr__(self):
