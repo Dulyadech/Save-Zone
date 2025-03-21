@@ -7,6 +7,8 @@ body {
     padding: 0;
     color: white;
     min-height: 100vh;
+    overflow-x: hidden; /* ป้องกันการเลื่อนแนวนอน */
+    position: relative;
 }
 
 nav .menu {
@@ -22,8 +24,10 @@ nav .menu {
     width: 100%;
     height: 100%;
     z-index: -1;
+    overflow: hidden; /* ป้องกันการเลื่อนใน container */
 }
 
+/* คงค่าวงกลมตามเดิม แต่ทำให้มันอยู่ใน container ที่มี overflow: hidden */
 .circle {
     border-radius: 100%;
     height: 1500px;
@@ -54,25 +58,26 @@ nav .menu {
     padding: 40px 20px;
     width: 90%;
     max-width: 1000px;
-    margin: 40px auto;
+    margin: 0 auto; /* ปรับเป็น 0 auto เพื่อให้อยู่กึ่งกลางโดยไม่มี margin ด้านบนมากเกินไป */
     position: relative;
     z-index: 1;
+    min-height: 110vh; /* ให้ container สูงเท่ากับความสูงของหน้าจอ */
+    box-sizing: border-box; /* รวม padding ในการคำนวณ height */
 }
 
 .upload-header {
     text-align: center;
     font-weight: 100px;
-    margin-bottom: 40px;
+    margin-bottom: 30px; /* ลด margin ลง */
 }
 
 .upload-header h1 {
-    font-size: 3rem;
-    /* font-family: "Lovelace Text"; */
+    font-size: clamp(2rem, 4vw, 3rem); /* ปรับขนาดตามขนาดหน้าจอ */
     font-weight: 550;
-    /* margin-bottom: 50px; */
     background: linear-gradient(90deg, #8003bb, #ff00a1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-top: 20px; /* ลด margin ด้านบน */
 }
 
 .upload-header p {
@@ -82,7 +87,8 @@ nav .menu {
 
 .upload-area {
     width: 100%;
-    min-height: 400px;
+    min-height: 350px; /* ลดความสูงลงเล็กน้อย */
+    max-height: 60vh; /* จำกัดความสูงสูงสุด */
     background: rgba(30, 30, 30, 0.5);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -90,6 +96,8 @@ nav .menu {
     padding: 30px;
     transition: all 0.3s ease;
     border: 2px dashed rgba(255, 255, 255, 0.2);
+    overflow-y: auto; /* เพิ่ม scroll แนวตั้งเมื่อจำเป็น */
+    box-sizing: border-box; /* รวม padding ในการคำนวณ height */
 }
 
 .upload-area.dragover {
@@ -104,11 +112,11 @@ nav .menu {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-height: 340px;
+    min-height: 240px; /* ลดความสูงลง */
 }
 
 .upload-icon-large {
-    font-size: 5rem;
+    font-size: 4rem; /* ลดขนาดลงเล็กน้อย */
     margin-bottom: 20px;
     color: #ff00a1;
 }
@@ -116,7 +124,7 @@ nav .menu {
 .upload-info {
     font-size: 0.9rem;
     opacity: 0.6;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 /* Upload Button */
@@ -191,7 +199,7 @@ nav .menu {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-height: 340px;
+    min-height: 240px; /* ลดความสูงลง */
 }
 
 .progress-container {
@@ -233,27 +241,27 @@ nav .menu {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-height: 340px;
+    min-height: 240px; /* ลดความสูงลง */
 }
 
 .processing-steps {
     width: 100%;
     max-width: 600px;
-    margin: 30px 0;
+    margin: 20px 0; /* ลด margin */
 }
 
 .step {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* ลด margin */
 }
 
 .step-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 35px; /* ลดขนาดลง */
+    height: 35px; /* ลดขนาดลง */
     border-radius: 50%;
     margin-right: 15px;
     background: rgba(255, 255, 255, 0.1);
@@ -261,7 +269,7 @@ nav .menu {
 }
 
 .step-icon ion-icon {
-    font-size: 1.5rem;
+    font-size: 1.3rem; /* ลดขนาดลง */
 }
 
 .step-icon.completed {
@@ -302,15 +310,15 @@ nav .menu {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-height: 340px;
+    min-height: 240px; /* ลดความสูงลง */
     text-align: center;
 }
 
 .complete-icon {
-    font-size: 4rem;
+    font-size: 3.5rem; /* ลดขนาดลง */
     font-weight: bold;
     color: #4CAF50;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* ลด margin */
 }
 
 .video-preview {
@@ -319,7 +327,7 @@ nav .menu {
     height: 225px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    margin: 20px 0;
+    margin: 15px 0; /* ลด margin */
     overflow: hidden;
 }
 
@@ -335,12 +343,12 @@ nav .menu {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 15px; /* ลด margin */
 }
 
 /* Option Divider */
 .option-divider {
-    margin: 15px 0;
+    margin: 10px 0; /* ลด margin */
     font-size: 1rem;
     opacity: 0.7;
 }
@@ -352,10 +360,10 @@ nav .menu {
     justify-content: center;
     background: linear-gradient(90deg, #8003bb, #ff00a1);
     color: white;
-    padding: 12px 30px;
+    padding: 10px 25px; /* ลด padding */
     border-radius: 50px;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* ลดขนาดลง */
     font-weight: 500;
     margin-top: 0;
     transition: all 0.3s;
@@ -366,7 +374,7 @@ nav .menu {
 }
 
 .preview-edit-button ion-icon {
-    font-size: 1.4rem;
+    font-size: 1.3rem; /* ลดขนาดลง */
 }
 
 .preview-edit-button:hover {
@@ -381,11 +389,11 @@ nav .menu {
     justify-content: center;
     background: transparent;
     color: white;
-    padding: 12px 30px;
+    padding: 10px 25px; /* ลด padding */
     border: 2px solid #ff00a1;
     border-radius: 50px;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* ลดขนาดลง */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s;
@@ -396,7 +404,7 @@ nav .menu {
 }
 
 .upload-again-button ion-icon {
-    font-size: 1.4rem;
+    font-size: 1.3rem; /* ลดขนาดลง */
 }
 
 .upload-again-button:hover {
@@ -408,21 +416,22 @@ nav .menu {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .upload-header h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
     
     .upload-area {
         padding: 20px;
+        min-height: 250px;
     }
     
     .upload-placeholder {
-        min-height: 300px;
+        min-height: 200px;
     }
 }
 
 @media (max-width: 480px) {
     .upload-header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .Upload {

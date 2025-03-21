@@ -6,6 +6,9 @@ body {
     margin: 0;
     padding: 0;
     color: white;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
 nav .menu {
@@ -45,29 +48,24 @@ nav .menu {
 .create-container {
     display: flex;
     flex-direction: column;
-    padding: 15vh 5vw 5vh;
+    padding: 10vh 5vw 5vh;
     max-width: 1400px;
     margin: 0 auto;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 .create-header {
     text-align: center;
-    font-weight: 100px;
-    margin-bottom: 40px;
-    text-align: center;
-    margin-bottom: 30px;
-    
+    margin-bottom: 20px;
 }
 
 .create-header h1 {
-    font-size: 3rem;
-    /* font-family: "Lovelace Text"; */
-    font-weight: 550;
-    font-size: 2.2rem;
-    /* margin-bottom: 10px; */
+    font-size: 2.5rem;
     background: linear-gradient(90deg, #9900ff, #ff00a1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin: 0 0 10px 0;
 }
 
 .create-header p {
@@ -80,7 +78,8 @@ nav .menu {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    height: 70vh;
+    flex: 1;
+    overflow: hidden;
 }
 
 .stage-area {
@@ -92,6 +91,7 @@ nav .menu {
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 .stage {
@@ -103,64 +103,7 @@ nav .menu {
     overflow: hidden;
 }
 
-.timeline {
-    height: 60px;
-    margin-top: 15px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 10px;
-}
-
-.timeline-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 100%;
-}
-
-.timeline-controls button {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.timeline-controls button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.timeline-controls button ion-icon {
-    font-size: 20px;
-}
-
-.timeline-controls input[type="range"] {
-    flex: 1;
-    height: 5px;
-    appearance: none;
-    background: linear-gradient(90deg, #8003bb, #ff00a1);
-    border-radius: 5px;
-}
-
-.timeline-controls input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: white;
-    cursor: pointer;
-}
-
-.timeline-controls span {
-    font-size: 0.8rem;
-    margin: 0 5px;
-}
+/* Timeline removed */
 
 .tools-panel {
     width: 300px;
@@ -170,6 +113,8 @@ nav .menu {
     overflow-y: auto;
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
 }
 
 .tools-section {
@@ -188,6 +133,7 @@ nav .menu {
 .tool-group {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 15px;
 }
@@ -230,7 +176,7 @@ nav .menu {
 }
 
 .tool-group button.secondary-button {
-    background-color: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(90deg, #8003bb, #ff00a1);
     border: none;
     width: 100%;
     padding: 10px;
@@ -302,7 +248,7 @@ nav .menu {
 .grid-cell {
     width: var(--cell-size);
     height: var(--cell-size);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* border: 1px solid rgba(255, 255, 255, 0.05); */
 }
 
 .grid-lines {
@@ -377,24 +323,52 @@ nav .menu {
 .dancer-new {
     animation: fadeIn 0.5s ease-out, pulse 1s ease-in-out 3;
 }
-/* Responsive styles */
+
+/* Responsive styles - improved */
 @media screen and (max-width: 992px) {
     .create-workspace {
         flex-direction: column;
+        height: calc(100vh - 120px);
+        overflow-y: auto;
     }
     
     .tools-panel {
-        width: 100%;
-        max-height: 300px;
+        width: auto;
+        flex-shrink: 0;
+        max-height: none;
+    }
+    
+    .stage-area {
+        min-height: 50vh;
     }
 }
 
 @media screen and (max-width: 768px) {
     .create-container {
-        padding: 15vh 15px 15px;
+        padding: 10vh 15px 15px;
+        height: 100vh;
+        overflow-y: auto;
     }
     
     .create-header h1 {
         font-size: 1.8rem;
+    }
+    
+    .create-header {
+        margin-bottom: 15px;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .create-container {
+        padding-top: 5vh;
+    }
+    
+    .create-header {
+        margin-bottom: 10px;
+    }
+    
+    .create-header h1 {
+        font-size: 1.5rem;
     }
 }

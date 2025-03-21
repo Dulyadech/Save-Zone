@@ -13,7 +13,7 @@
     <!-- import ion icon package -->
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
-    <title>Document</title>
+    <title>Save Zone</title>
 </head>
 
 <body>
@@ -36,7 +36,24 @@
             <li><a href="{{ url_for('views.previews') }}">Preview & Edit</a></li>
             <!-- about us menu -->
             <li><a href="{{ url_for('views.about') }}">About us</a></li>
-            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            
+            {% if current_user.is_authenticated %}
+            <li class="user-menu">
+                <a href="{{ url_for('auth.profile') }}">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <span class="username">{{ current_user.username }}</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('auth.profile') }}">Profile</a>
+                    {% if current_user.is_admin %}
+                    <a href="{{ url_for('auth.admin') }}">Admin</a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </div>
+            </li>
+            {% else %}
+            <li><a href="{{ url_for('auth.login') }}" class="auth-link"><ion-icon name="person-circle-outline"></ion-icon></a></li>
+            {% endif %}
         </ul>
     </nav>
     <!-- elements -->
@@ -60,15 +77,49 @@
             <p>or</p>
         </span>
         <!-- create button -->
-        <a href="create.html" button class="Create">
+        <a href="{{ url_for('views.create') }}" button class="Create">
             <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
         </a>
     </div>
 
     <section>
     </section>
-    <!-- link java script file -->
-    <script src="js\script.js"></script>
+
+    <!-- Flash messages container -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+                <button type="button" class="close-alert">&times;</button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- link JavaScript files -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main-auth.js') }}"></script>
+    <script>
+        // Close flash messages
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentNode.style.display = 'none';
+            });
+        });
+        
+        // Auto-hide flash messages after 5 seconds
+        setTimeout(function() {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.opacity = '0';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 500);
+            });
+        }, 5000);
+    </script>
 </body>
 
 </html>
