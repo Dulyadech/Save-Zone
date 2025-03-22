@@ -1,0 +1,1222 @@
+{
+    "frame_1": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 60,
+                "timestamp": 2.0,
+                "sequence_number": 1
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.30364583333333334,
+                    "y": 0.8537037037037037
+                },
+                "original": {
+                    "x": 583,
+                    "y": 922
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7197916666666667,
+                    "y": 0.8574074074074074
+                },
+                "original": {
+                    "x": 1382,
+                    "y": 926
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.628125,
+                    "y": 0.8314814814814815
+                },
+                "original": {
+                    "x": 1206,
+                    "y": 898
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.3880208333333333,
+                    "y": 0.8240740740740741
+                },
+                "original": {
+                    "x": 745,
+                    "y": 890
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5557291666666667,
+                    "y": 0.8074074074074075
+                },
+                "original": {
+                    "x": 1067,
+                    "y": 872
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.48541666666666666,
+                    "y": 0.8462962962962963
+                },
+                "original": {
+                    "x": 932,
+                    "y": 914
+                }
+            }
+        },
+        {
+            "person_id": 7,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4432291666666667,
+                    "y": 0.8166666666666667
+                },
+                "original": {
+                    "x": 851,
+                    "y": 882
+                }
+            }
+        }
+    ],
+    "frame_2": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 120,
+                "timestamp": 4.0,
+                "sequence_number": 2
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7223958333333333,
+                    "y": 0.8759259259259259
+                },
+                "original": {
+                    "x": 1387,
+                    "y": 946
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.30364583333333334,
+                    "y": 0.8518518518518519
+                },
+                "original": {
+                    "x": 583,
+                    "y": 920
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5520833333333334,
+                    "y": 0.8138888888888889
+                },
+                "original": {
+                    "x": 1060,
+                    "y": 879
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.628125,
+                    "y": 0.8277777777777777
+                },
+                "original": {
+                    "x": 1206,
+                    "y": 894
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.39010416666666664,
+                    "y": 0.8148148148148148
+                },
+                "original": {
+                    "x": 749,
+                    "y": 880
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4817708333333333,
+                    "y": 0.8314814814814815
+                },
+                "original": {
+                    "x": 925,
+                    "y": 898
+                }
+            }
+        },
+        {
+            "person_id": 7,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4359375,
+                    "y": 0.7796296296296297
+                },
+                "original": {
+                    "x": 837,
+                    "y": 842
+                }
+            }
+        }
+    ],
+    "frame_3": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 180,
+                "timestamp": 6.0,
+                "sequence_number": 3
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.3020833333333333,
+                    "y": 0.862037037037037
+                },
+                "original": {
+                    "x": 580,
+                    "y": 931
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7364583333333333,
+                    "y": 0.8583333333333333
+                },
+                "original": {
+                    "x": 1414,
+                    "y": 927
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6296875,
+                    "y": 0.8361111111111111
+                },
+                "original": {
+                    "x": 1209,
+                    "y": 903
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.37864583333333335,
+                    "y": 0.8444444444444444
+                },
+                "original": {
+                    "x": 727,
+                    "y": 912
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5484375,
+                    "y": 0.812037037037037
+                },
+                "original": {
+                    "x": 1053,
+                    "y": 877
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.47291666666666665,
+                    "y": 0.8675925925925926
+                },
+                "original": {
+                    "x": 908,
+                    "y": 937
+                }
+            }
+        },
+        {
+            "person_id": 7,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4276041666666667,
+                    "y": 0.8166666666666667
+                },
+                "original": {
+                    "x": 821,
+                    "y": 882
+                }
+            }
+        }
+    ],
+    "frame_4": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 240,
+                "timestamp": 8.0,
+                "sequence_number": 4
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6041666666666666,
+                    "y": 0.8231481481481482
+                },
+                "original": {
+                    "x": 1160,
+                    "y": 889
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.490625,
+                    "y": 0.8916666666666667
+                },
+                "original": {
+                    "x": 942,
+                    "y": 963
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4348958333333333,
+                    "y": 0.8175925925925925
+                },
+                "original": {
+                    "x": 835,
+                    "y": 883
+                }
+            }
+        }
+    ],
+    "frame_5": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 300,
+                "timestamp": 10.0,
+                "sequence_number": 5
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6989583333333333,
+                    "y": 0.825
+                },
+                "original": {
+                    "x": 1342,
+                    "y": 891
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5713541666666667,
+                    "y": 0.8629629629629629
+                },
+                "original": {
+                    "x": 1097,
+                    "y": 932
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.33958333333333335,
+                    "y": 0.8157407407407408
+                },
+                "original": {
+                    "x": 652,
+                    "y": 881
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.48802083333333335,
+                    "y": 0.924074074074074
+                },
+                "original": {
+                    "x": 937,
+                    "y": 998
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6317708333333333,
+                    "y": 0.8296296296296296
+                },
+                "original": {
+                    "x": 1213,
+                    "y": 896
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.40625,
+                    "y": 0.8712962962962963
+                },
+                "original": {
+                    "x": 780,
+                    "y": 941
+                }
+            }
+        },
+        {
+            "person_id": 7,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.37135416666666665,
+                    "y": 0.8074074074074075
+                },
+                "original": {
+                    "x": 713,
+                    "y": 872
+                }
+            }
+        }
+    ],
+    "frame_6": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 360,
+                "timestamp": 12.0,
+                "sequence_number": 6
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.39479166666666665,
+                    "y": 0.8981481481481481
+                },
+                "original": {
+                    "x": 758,
+                    "y": 970
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5828125,
+                    "y": 0.8638888888888889
+                },
+                "original": {
+                    "x": 1119,
+                    "y": 933
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4921875,
+                    "y": 0.9138888888888889
+                },
+                "original": {
+                    "x": 945,
+                    "y": 987
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7072916666666667,
+                    "y": 0.8351851851851851
+                },
+                "original": {
+                    "x": 1358,
+                    "y": 902
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.32447916666666665,
+                    "y": 0.812037037037037
+                },
+                "original": {
+                    "x": 623,
+                    "y": 877
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6427083333333333,
+                    "y": 0.8462962962962963
+                },
+                "original": {
+                    "x": 1234,
+                    "y": 914
+                }
+            }
+        }
+    ],
+    "frame_7": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 420,
+                "timestamp": 14.0,
+                "sequence_number": 7
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.2911458333333333,
+                    "y": 0.812962962962963
+                },
+                "original": {
+                    "x": 559,
+                    "y": 878
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.375,
+                    "y": 0.8842592592592593
+                },
+                "original": {
+                    "x": 720,
+                    "y": 955
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6489583333333333,
+                    "y": 0.837037037037037
+                },
+                "original": {
+                    "x": 1246,
+                    "y": 904
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.528125,
+                    "y": 0.9138888888888889
+                },
+                "original": {
+                    "x": 1014,
+                    "y": 987
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7151041666666667,
+                    "y": 0.8231481481481482
+                },
+                "original": {
+                    "x": 1373,
+                    "y": 889
+                }
+            }
+        }
+    ],
+    "frame_8": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 480,
+                "timestamp": 16.0,
+                "sequence_number": 8
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.390625,
+                    "y": 0.9046296296296297
+                },
+                "original": {
+                    "x": 750,
+                    "y": 977
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.60625,
+                    "y": 0.8611111111111112
+                },
+                "original": {
+                    "x": 1164,
+                    "y": 930
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5270833333333333,
+                    "y": 0.8833333333333333
+                },
+                "original": {
+                    "x": 1012,
+                    "y": 954
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4791666666666667,
+                    "y": 0.8435185185185186
+                },
+                "original": {
+                    "x": 920,
+                    "y": 911
+                }
+            }
+        }
+    ],
+    "frame_9": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 540,
+                "timestamp": 18.0,
+                "sequence_number": 9
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.3958333333333333,
+                    "y": 0.8796296296296297
+                },
+                "original": {
+                    "x": 760,
+                    "y": 950
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6786458333333333,
+                    "y": 0.8648148148148148
+                },
+                "original": {
+                    "x": 1303,
+                    "y": 934
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4890625,
+                    "y": 0.8537037037037037
+                },
+                "original": {
+                    "x": 939,
+                    "y": 922
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5567708333333333,
+                    "y": 0.875
+                },
+                "original": {
+                    "x": 1069,
+                    "y": 945
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6010416666666667,
+                    "y": 0.8212962962962963
+                },
+                "original": {
+                    "x": 1154,
+                    "y": 887
+                }
+            }
+        }
+    ],
+    "frame_10": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 600,
+                "timestamp": 20.0,
+                "sequence_number": 10
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.18125,
+                    "y": 0.8611111111111112
+                },
+                "original": {
+                    "x": 348,
+                    "y": 930
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.8265625,
+                    "y": 0.8675925925925926
+                },
+                "original": {
+                    "x": 1587,
+                    "y": 937
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.396875,
+                    "y": 0.8722222222222222
+                },
+                "original": {
+                    "x": 762,
+                    "y": 942
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.32916666666666666,
+                    "y": 0.7888888888888889
+                },
+                "original": {
+                    "x": 632,
+                    "y": 852
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6848958333333334,
+                    "y": 0.8564814814814815
+                },
+                "original": {
+                    "x": 1315,
+                    "y": 925
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5328125,
+                    "y": 0.8379629629629629
+                },
+                "original": {
+                    "x": 1023,
+                    "y": 905
+                }
+            }
+        },
+        {
+            "person_id": 7,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6307291666666667,
+                    "y": 0.8907407407407407
+                },
+                "original": {
+                    "x": 1211,
+                    "y": 962
+                }
+            }
+        }
+    ],
+    "frame_11": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 660,
+                "timestamp": 22.0,
+                "sequence_number": 11
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.1828125,
+                    "y": 0.8629629629629629
+                },
+                "original": {
+                    "x": 351,
+                    "y": 932
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.8166666666666667,
+                    "y": 0.8851851851851852
+                },
+                "original": {
+                    "x": 1568,
+                    "y": 956
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4140625,
+                    "y": 0.9277777777777778
+                },
+                "original": {
+                    "x": 795,
+                    "y": 1002
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6427083333333333,
+                    "y": 0.9268518518518518
+                },
+                "original": {
+                    "x": 1234,
+                    "y": 1001
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5322916666666667,
+                    "y": 0.8638888888888889
+                },
+                "original": {
+                    "x": 1022,
+                    "y": 933
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.3385416666666667,
+                    "y": 0.8101851851851852
+                },
+                "original": {
+                    "x": 650,
+                    "y": 875
+                }
+            }
+        }
+    ],
+    "frame_12": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 720,
+                "timestamp": 24.0,
+                "sequence_number": 12
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.2859375,
+                    "y": 0.8592592592592593
+                },
+                "original": {
+                    "x": 549,
+                    "y": 928
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.9270833333333334,
+                    "y": 0.8787037037037037
+                },
+                "original": {
+                    "x": 1780,
+                    "y": 949
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4322916666666667,
+                    "y": 0.8074074074074075
+                },
+                "original": {
+                    "x": 830,
+                    "y": 872
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6317708333333333,
+                    "y": 0.8611111111111112
+                },
+                "original": {
+                    "x": 1213,
+                    "y": 930
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5317708333333333,
+                    "y": 0.9185185185185185
+                },
+                "original": {
+                    "x": 1021,
+                    "y": 992
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7578125,
+                    "y": 0.8777777777777778
+                },
+                "original": {
+                    "x": 1455,
+                    "y": 948
+                }
+            }
+        }
+    ],
+    "frame_13": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 780,
+                "timestamp": 26.0,
+                "sequence_number": 13
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.32916666666666666,
+                    "y": 0.850925925925926
+                },
+                "original": {
+                    "x": 632,
+                    "y": 919
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.91875,
+                    "y": 0.8805555555555555
+                },
+                "original": {
+                    "x": 1764,
+                    "y": 951
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4161458333333333,
+                    "y": 0.8157407407407408
+                },
+                "original": {
+                    "x": 799,
+                    "y": 881
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.553125,
+                    "y": 0.9490740740740741
+                },
+                "original": {
+                    "x": 1062,
+                    "y": 1025
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6416666666666667,
+                    "y": 0.8731481481481481
+                },
+                "original": {
+                    "x": 1232,
+                    "y": 943
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.7614583333333333,
+                    "y": 0.8972222222222223
+                },
+                "original": {
+                    "x": 1462,
+                    "y": 969
+                }
+            }
+        }
+    ],
+    "frame_14": [
+        {
+            "frame_info": {
+                "width": 1920,
+                "height": 1080,
+                "frame_number": 840,
+                "timestamp": 28.0,
+                "sequence_number": 14
+            }
+        },
+        {
+            "person_id": 1,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.4484375,
+                    "y": 0.8574074074074074
+                },
+                "original": {
+                    "x": 861,
+                    "y": 926
+                }
+            }
+        },
+        {
+            "person_id": 2,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6015625,
+                    "y": 0.9333333333333333
+                },
+                "original": {
+                    "x": 1155,
+                    "y": 1008
+                }
+            }
+        },
+        {
+            "person_id": 3,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.75,
+                    "y": 0.850925925925926
+                },
+                "original": {
+                    "x": 1440,
+                    "y": 919
+                }
+            }
+        },
+        {
+            "person_id": 4,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.6802083333333333,
+                    "y": 0.8675925925925926
+                },
+                "original": {
+                    "x": 1306,
+                    "y": 937
+                }
+            }
+        },
+        {
+            "person_id": 5,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5197916666666667,
+                    "y": 0.8712962962962963
+                },
+                "original": {
+                    "x": 998,
+                    "y": 941
+                }
+            }
+        },
+        {
+            "person_id": 6,
+            "coordinates": {
+                "normalized": {
+                    "x": 0.5526041666666667,
+                    "y": 0.7675925925925926
+                },
+                "original": {
+                    "x": 1061,
+                    "y": 829
+                }
+            }
+        }
+    ]
+}

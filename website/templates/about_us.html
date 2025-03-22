@@ -1,39 +1,649 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/about_us.css">
+    <title>About Us - Save Zone</title>
     <link rel="stylesheet" href="../static/css/navbar.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
-
-    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000000;
+            font-family: "Poppins", sans-serif;
+            color: white;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .about-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px 0;
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 80px); /* Full height minus navbar */
+        }
+        
+        .elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .circle {
+            border-radius: 100%;
+            height: 150vh;
+            width: 150vh;
+            opacity: 0.5;
+            position: absolute;
+            filter: blur(150px);
+            transition: all 1s ease-out;
+        }
+        
+        .purple {
+            background-color: #6e02a7;
+            left: -50vh;
+            top: 40vh;
+        }
+        
+        .pink {
+            background-color: #dc89bb;
+            right: -50vh;
+            top: 40vh;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 0px;
+            width: 100%;
+        }
+        
+        .about-title {
+            
+            font-size: 3.2rem;
+            font-weight: 600;
+            margin-top: 50px;
+            margin-bottom: 0px;
+            background: linear-gradient(90deg, #9900ff, #ff00a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .team-section {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 40px;
+            flex: 1;
+        }
+        
+        .team-visual {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .member-image-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+        
+        .member-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .member-image {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: scale(0.9);
+        }
+        
+        .member-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .team-info {
+            width: 50%;
+            padding: 0 30px;
+            position: relative;
+            height: 320px;
+        }
+        
+        .member-info {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .member-info.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .member-name {
+            font-size: 2.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            /* background: white; */
+            background: linear-gradient(90deg, #9900ff, #ff00a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            word-wrap: break-word;
+        }
+        
+        .member-details {
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 12px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .member-details p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+        
+        .member-details span {
+            font-weight: 500;
+            opacity: 0.8;
+            margin-right: 8px;
+            color: #ff9ccd;
+        }
+        
+        .member-role {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #ff00a1;
+            margin-bottom: 15px;
+            padding-left: 5px;
+            border-left: 3px solid #ff00a1;
+        }
+        
+        .member-bio {
+            line-height: 1.7;
+            opacity: 0.9;
+            font-size: 1.05rem;
+            padding-left: 5px;
+        }
+        
+        .member-bio br {
+            margin-bottom: 5px;
+        }
+        
+        .progress-dots-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 30px;
+        }
+        
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .dot.active {
+            background-color: #ff00a1;
+            box-shadow: 0 0 10px rgba(255, 0, 161, 0.7);
+            transform: scale(1.2);
+        }
+        
+        .dot:hover {
+            background-color: rgba(255, 0, 161, 0.5);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0); }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .team-info {
+                width: 55%;
+            }
+            
+            .team-visual {
+                width: 35%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .about-container {
+                padding-top: 80px;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .team-section {
+                flex-direction: column;
+                height: auto;
+                padding: 30px 0;
+                margin-bottom: 60px;
+            }
+            
+            .team-visual, .team-info {
+                width: 100%;
+            }
+            
+            .team-info {
+                height: 320px;
+                margin-top: 30px;
+            }
+            
+            .member-info {
+                text-align: center;
+            }
+            
+            .member-role {
+                border-left: none;
+                border-bottom: 3px solid #ff00a1;
+                padding: 0 0 5px 0;
+                margin: 0 auto 15px;
+                display: inline-block;
+            }
+            
+            .about-title {
+                font-size: 2.5rem;
+            }
+            
+            .progress-dots-container {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .about-container {
+                padding-top: 70px;
+            }
+            
+            .about-title {
+                font-size: 2rem;
+            }
+            
+            .member-image-container {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .team-info {
+                padding: 0 15px;
+                height: 300px;
+            }
+            
+            .member-name {
+                font-size: 1.6rem;
+            }
+            
+            .member-details {
+                padding: 10px 15px;
+            }
+            
+            .member-details p {
+                font-size: 0.9rem;
+            }
+            
+            .member-role {
+                font-size: 1rem;
+            }
+            
+            .member-bio {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Navbar -->
     <nav>
-        <a href="{{ url_for('views.home') }}" class="logo-container">
+        <a href="/" class="logo-container">
             <div class="logo">Save Zone</div>
             <ion-icon name="musical-note-outline"></ion-icon>
         </a>
         <ul>
-            <li><a href="{{ url_for('views.upload') }}">Upload</a></li>
-            <li><a href="{{ url_for('views.create') }}">Create</a></li>
-            <li><a href="{{ url_for('views.previews') }}">Preview & Edit</a></li>
-            <li><a href="{{ url_for('views.about') }}" class="menu">About us</a></li>
+            <li><a href="/upload">Upload</a></li>
+            <li><a href="/create">Create</a></li>
+            <li><a href="/previews">Preview & Edit</a></li>
+            <li><a href="/about" class="menu">About us</a></li>
+            <li class="user-menu">
+                <a href="/profile">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <span class="username">Username</span>
+                </a>
+            </li>
         </ul>
     </nav>
+    
+    <!-- Background elements -->
     <div class="elements">
         <div class="circle purple"></div>
         <div class="circle pink"></div>
     </div>
-    <section>
-    </section>
-    <script src="js\script.js"></script>
-
+    
+    <!-- Main content -->
+    <div class="about-container">
+        <div class="about-header">
+            <h1 class="about-title">Meet Our Team</h1>
+        </div>
+        
+        <div class="team-section">
+            <div class="team-visual">
+                <div class="member-image-container">
+                    <div class="member-circle">
+                        <!-- Team member images -->
+                        <img src="../static/images/sofia.png" alt="Team Member 1" class="member-image active" id="member-1-img">
+                        <img src="../static/images/book.png" alt="Team Member 2" class="member-image" id="member-2-img">
+                        <img src="../static/images/neptune.png" alt="Team Member 3" class="member-image" id="member-3-img">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-info">
+                <!-- Team member information -->
+                <div class="member-info active" id="member-1-info">
+                    <h2 class="member-name">Dulyadech Phuangchampee</h2>
+                    <div class="member-details">
+                        <p><span>Student ID:</span>673040387-9</p>
+                        <p><span>Faculty:</span>Engineering of Khon Kaen University</p>
+                        <p><span>Major:</span>Computer Engineering</p>
+                    </div>
+                    <p class="member-role">Backend Developer</p>
+                    <p class="member-bio">
+                        • Main coder<br>
+                        • Function
+                    </p>
+                </div>
+                
+                <div class="member-info" id="member-2-info">
+                    <h2 class="member-name">Kittiphat Petchsuriya</h2>
+                    <div class="member-details">
+                        <p><span>Student ID:</span>673040376-4</p>
+                        <p><span>Faculty:</span>Engineering of Khon Kaen University</p>
+                        <p><span>Major:</span>Computer Engineering</p>
+                    </div>
+                    <p class="member-role">Backend Developer</p>
+                    <p class="member-bio">
+                        • Assistant coder<br>
+                        • Flask
+                    </p>
+                </div>
+                
+                <div class="member-info" id="member-3-info">
+                    <h2 class="member-name">Pandaree Somnueknaitham</h2>
+                    <div class="member-details">
+                        <p><span>Student ID:</span>673040392-6</p>
+                        <p><span>Faculty:</span>Engineering of Khon Kaen University</p>
+                        <p><span>Major:</span>Computer Engineering</p>
+                    </div>
+                    <p class="member-role">Frontend Developer</p>
+                    <p class="member-bio">
+                        • UX/UI design<br>
+                        • User interface
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-dots-container">
+            <div class="progress-dots">
+                <div class="dot active" data-member="1"></div>
+                <div class="dot" data-member="2"></div>
+                <div class="dot" data-member="3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Team members data
+            const members = [
+                { id: 1, name: "Dulyadech Phuangchampee" },
+                { id: 2, name: "Kittiphat Petchsuriya" },
+                { id: 3, name: "Pandaree Somnueknaitham" }
+            ];
+            
+            let activeIndex = 0;
+            const dots = document.querySelectorAll('.dot');
+            const memberImgs = document.querySelectorAll('.member-image');
+            const memberInfos = document.querySelectorAll('.member-info');
+            
+            // Function to update active member
+            function updateActiveMember(index) {
+                // Update dots
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+                
+                // Update images with fade effect
+                memberImgs.forEach((img, i) => {
+                    if (i === index) {
+                        img.classList.add('active');
+                    } else {
+                        img.classList.remove('active');
+                    }
+                });
+                
+                // Update info with fade effect
+                memberInfos.forEach((info, i) => {
+                    if (i === index) {
+                        info.classList.add('active');
+                    } else {
+                        info.classList.remove('active');
+                    }
+                });
+                
+                // Update background circle positions dynamically based on member
+                const purpleCircle = document.querySelector('.purple');
+                const pinkCircle = document.querySelector('.pink');
+                
+                if (index === 0) {
+                    purpleCircle.style.left = '-50vh';
+                    purpleCircle.style.top = '20vh';
+                    pinkCircle.style.right = '-50vh';
+                    pinkCircle.style.top = '20vh';
+                } else if (index === 1) {
+                    purpleCircle.style.left = '-30vh';
+                    purpleCircle.style.top = '0vh';
+                    pinkCircle.style.right = '-70vh';
+                    pinkCircle.style.top = '40vh';
+                } else if (index === 2) {
+                    purpleCircle.style.left = '-70vh';
+                    purpleCircle.style.top = '40vh';
+                    pinkCircle.style.right = '-30vh';
+                    pinkCircle.style.top = '0vh';
+                }
+                
+                activeIndex = index;
+            }
+            
+            // Add click event listeners to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    updateActiveMember(index);
+                });
+            });
+            
+            // Handle mouse wheel event to change active member
+            document.querySelector('.team-section').addEventListener('wheel', function(e) {
+                e.preventDefault();
+                
+                // Determine scroll direction
+                if (e.deltaY > 0) {
+                    // Scrolling down
+                    const nextIndex = (activeIndex + 1) % members.length;
+                    updateActiveMember(nextIndex);
+                } else {
+                    // Scrolling up
+                    const prevIndex = (activeIndex - 1 + members.length) % members.length;
+                    updateActiveMember(prevIndex);
+                }
+            }, { passive: false });
+            
+            // Handle keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    const nextIndex = (activeIndex + 1) % members.length;
+                    updateActiveMember(nextIndex);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    const prevIndex = (activeIndex - 1 + members.length) % members.length;
+                    updateActiveMember(prevIndex);
+                }
+            });
+            
+            // Auto rotate every 5 seconds
+            let autoRotateInterval = setInterval(() => {
+                const nextIndex = (activeIndex + 1) % members.length;
+                updateActiveMember(nextIndex);
+            }, 5000);
+            
+            // Stop auto rotation when user interacts
+            document.querySelector('.team-section').addEventListener('mouseenter', () => {
+                clearInterval(autoRotateInterval);
+            });
+            
+            // Resume auto rotation when user leaves
+            document.querySelector('.team-section').addEventListener('mouseleave', () => {
+                autoRotateInterval = setInterval(() => {
+                    const nextIndex = (activeIndex + 1) % members.length;
+                    updateActiveMember(nextIndex);
+                }, 5000);
+            });
+            
+            // Support for touch swipe on mobile
+            let touchStartY = 0;
+            let touchStartX = 0;
+            
+            document.querySelector('.team-section').addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                touchStartX = e.touches[0].clientX;
+            }, false);
+            
+            document.querySelector('.team-section').addEventListener('touchmove', function(e) {
+                if (!touchStartY || !touchStartX) {
+                    return;
+                }
+                
+                const touchEndY = e.touches[0].clientY;
+                const touchEndX = e.touches[0].clientX;
+                const diffY = touchStartY - touchEndY;
+                const diffX = touchStartX - touchEndX;
+                
+                // Determine if horizontal or vertical swipe
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // Horizontal swipe
+                    if (Math.abs(diffX) > 30) {
+                        if (diffX > 0) {
+                            // Swipe left (next)
+                            const nextIndex = (activeIndex + 1) % members.length;
+                            updateActiveMember(nextIndex);
+                        } else {
+                            // Swipe right (previous)
+                            const prevIndex = (activeIndex - 1 + members.length) % members.length;
+                            updateActiveMember(prevIndex);
+                        }
+                        
+                        // Reset touch positions
+                        touchStartY = 0;
+                        touchStartX = 0;
+                        
+                        // Stop auto rotation on interaction
+                        clearInterval(autoRotateInterval);
+                    }
+                } else {
+                    // Vertical swipe
+                    if (Math.abs(diffY) > 30) {
+                        if (diffY > 0) {
+                            // Swipe up (next)
+                            const nextIndex = (activeIndex + 1) % members.length;
+                            updateActiveMember(nextIndex);
+                        } else {
+                            // Swipe down (previous)
+                            const prevIndex = (activeIndex - 1 + members.length) % members.length;
+                            updateActiveMember(prevIndex);
+                        }
+                        
+                        // Reset touch positions
+                        touchStartY = 0;
+                        touchStartX = 0;
+                        
+                        // Stop auto rotation on interaction
+                        clearInterval(autoRotateInterval);
+                    }
+                }
+            }, false);
+        });
+    </script>
 </body>
-
 </html>
