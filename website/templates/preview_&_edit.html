@@ -10,227 +10,6 @@
   <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
   <title>Dance Position Preview & Edit</title>
-  <style>
-    body {
-      background-color: #1e1e1e;
-      background-color: #000000;
-      color: white;
-      text-align: center;
-    }
-
-    .frame-info {
-      position: relative;
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .circle {
-      z-index: -99;
-      border-radius: 100%;
-      height: 180vh;
-      width: 180vh;
-      opacity: 0.5;
-      position: fixed;
-      top: 300px;
-    }
-
-    h1 {
-      margin-top: 110px;
-      font-weight: 100px;
-      margin-bottom: 40px;
-      font-size: 3rem;
-      color: linear-gradient(90deg, #8003bb, #ff00a1);
-      background: linear-gradient(90deg, #9900ff, #ff00a1);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      width: 90%;
-      margin: 20px auto auto;
-      margin-top: 20px;
-    }
-
-    .frame {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 15px;
-      border-radius: 10px;
-      width: 100%;
-      width: 90%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .border-line {
-      width: 2px;
-      margin: 0 10px;
-      background-color: rgba(0, 0, 0, 0.4);
-      border-radius: 20px;
-    }
-
-    .image-container {
-      display: flex;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    img {
-      max-width: 100%;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    canvas {
-      width: 50%;
-      border-radius: 8px;
-      transition: border 0.3s ease;
-    }
-
-    /* Button styles */
-    .button-container {
-      display: flex;
-      gap: 10px;
-      margin: 10px 0;
-    }
-
-    .edit-btn,
-    .save-btn,
-    .cancel-btn {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    .edit-btn {
-      background: rgba(153, 0, 255, 0.7);
-      color: white;
-    }
-
-    .save-btn {
-      background: rgba(0, 255, 127, 0.7);
-      color: black;
-    }
-
-    .cancel-btn {
-      background: rgba(255, 99, 71, 0.7);
-      color: white;
-    }
-
-    .edit-btn:hover {
-      background: rgba(153, 0, 255, 0.9);
-    }
-
-    .save-btn:hover {
-      background: rgba(0, 255, 127, 0.9);
-    }
-
-    .cancel-btn:hover {
-      background: rgba(255, 99, 71, 0.9);
-    }
-
-    /* Notification styles */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 5px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      transition: opacity 0.5s ease;
-    }
-
-    .success {
-      background-color: rgba(46, 204, 113, 0.9);
-      color: white;
-    }
-
-    .error {
-      background-color: rgba(231, 76, 60, 0.9);
-      color: white;
-    }
-
-    .info {
-      background-color: rgba(52, 152, 219, 0.9);
-      color: white;
-    }
-
-    .fade-out {
-      opacity: 0;
-    }
-
-    /* Add styles for person labels */
-    .person-label {
-      color: white;
-      font-size: 12px;
-      position: absolute;
-      pointer-events: none;
-    }
-
-    /* Loading indicator */
-    .loading {
-      display: block;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 15px 20px;
-      border-radius: 5px;
-      z-index: 1001;
-    }
-
-    /* Help tooltip */
-    .tooltip {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 5px;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .tooltip-content {
-      display: none;
-      position: absolute;
-      top: 30px;
-      right: 0;
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      width: 250px;
-      text-align: left;
-      z-index: 100;
-    }
-
-    .tooltip:hover .tooltip-content {
-      display: block;
-    }
-  </style>
 </head>
 
 <body>
@@ -273,12 +52,22 @@
   <h1><i class="ri-dance-fill"></i> Dance Position Preview & Edit</h1>
 
   <!-- Loading indicator -->
-  <div class="loading">Loading...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>Loading dance positions...</p>
+  </div>
+
+  <!-- Selection instruction -->
+  <div class="selection-instruction">
+    <ion-icon name="information-circle-outline"></ion-icon>
+    <p>Select zones to save them as images with white backgrounds</p>
+  </div>
 
   <div class="container">
     <!-- Frames will be dynamically added here by JavaScript -->
   </div>
 
+  <!-- Script imports -->
   <script src="../static/js/preview.js"></script>
   <script src="../static/js/script.js"></script>
 </body>

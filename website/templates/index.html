@@ -91,11 +91,11 @@
                 <div class="showcase-slide active">
                     <div class="showcase-content">
                         <div class="showcase-text">
-                            <h2>View it from all angles with 3D</h2>
+                            <h2>Turn Your Video</h2>
                             <p>Check out our new 3D view! Visualize your dance formations from any angle for perfect choreography planning.</p>
                         </div>
                         <div class="showcase-image">
-                            <img src="{{ url_for('static', filename='images/3d-dance-zone.png') }}" alt="3D Dance Zone Visualization">
+                            <img src="{{ url_for('static', filename='images/dance.png') }}" alt="3D Dance Zone Visualization">
                         </div>
                     </div>
                 </div>
@@ -104,11 +104,11 @@
                 <div class="showcase-slide">
                     <div class="showcase-content">
                         <div class="showcase-text">
-                            <h2>Precise choreography planning</h2>
+                            <h2>To Performance</h2>
                             <p>Plan every movement with exact timing and positioning. Perfect for group performances and professional dance productions.</p>
                         </div>
                         <div class="showcase-image">
-                            <img src="{{ url_for('static', filename='images/dance-formations.png') }}" alt="Dance Formations">
+                            <img src="{{ url_for('static', filename='images/form.png') }}" alt="Dance Formations">
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
                             <p>Work with your existing performance videos</p>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="feature-icon">
                             <ion-icon name="analytics-outline"></ion-icon>
                         </div>
@@ -181,7 +181,7 @@
                             <h4>Dancer position tracking</h4>
                             <p>Automatically detect and track dancer positions</p>
                         </div>
-                    </li>
+                    </li> -->
                     <li>
                         <div class="feature-icon">
                             <ion-icon name="eye-outline"></ion-icon>
@@ -303,7 +303,7 @@
             dot.addEventListener('click', function() {
                 showSlide(index);
                 clearInterval(slideInterval);
-                slideInterval = setInterval(nextSlide, 5000);
+                slideInterval = setInterval(nextSlide, 2000);
             });
         });
     </script>

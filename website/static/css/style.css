@@ -410,13 +410,13 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: perspective(1000px) rotateY(-8deg);
-    transition: transform 0.7s ease;
+    /* transform: perspective(1000px) rotateY(-8deg); */
+    /* transition: transform 0.7s ease; */
 }
-
+/* 
 .showcase-image:hover {
     transform: perspective(1000px) rotateY(0deg);
-}
+} */
 
 .showcase-image img {
     max-width: 100%;
@@ -749,24 +749,26 @@ section {
     }
 }
 
-/* Specific styling for buttons in action card - Improved */
+/* Fix for action card buttons - Improved positioning for icons */
 .action-card .Upload, 
 .action-card .Create {
-    width: 90%; /* Fixed width percentage */
-    margin: 15px auto; /* Center with auto margin */
+    width: 90%;
+    margin: 15px auto;
     height: 50px;
     justify-content: center;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    display: flex; /* Ensure flexbox works */
+    display: flex;
+    position: relative; /* Added this */
+    overflow: hidden; /* Added this to prevent icon overflow */
 }
 
 /* Reset the flex layout inside the buttons to make text centered */
 .action-card .Upload p, 
 .action-card .Create p {
-    font-size: 1.1rem; /* Slightly bigger font */
+    font-size: 1.1rem;
     text-align: center;
-    margin: 0 auto; /* Center the text */
-    padding-right: 35px; /* Make space for the icon */
+    margin: 0 auto;
+    padding-right: 35px;
 }
 
 /* Adjust icon position for better alignment */
@@ -776,6 +778,13 @@ section {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+/* Prevent icon from overflowing when button is hovered */
+.action-card .Upload:hover .Upload-icon,
+.action-card .Create:hover .Create-icon {
+    transform: translateY(-50%) scale(1.1);
+    right: 10px; /* Keep the icon in the same position */
 }
 
 .action-card .Or {
