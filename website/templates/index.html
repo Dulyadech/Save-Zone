@@ -10,7 +10,8 @@
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
     <title>Save Zone | Dance Position Management</title>
-    <meta name="description" content="Create, manage and visualize dance positions with Save Zone - the ultimate choreography planning tool">
+    <meta name="description"
+        content="Create, manage and visualize dance positions with Save Zone - the ultimate choreography planning tool">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             <li><a href="{{ url_for('views.create') }}">Create</a></li>
             <li><a href="{{ url_for('views.previews') }}">Preview & Edit</a></li>
             <li><a href="{{ url_for('views.about') }}">About us</a></li>
-            
+
             {% if current_user.is_authenticated %}
             <li class="user-menu">
                 <a href="{{ url_for('auth.profile') }}">
@@ -41,24 +42,25 @@
                 </div>
             </li>
             {% else %}
-            <li><a href="{{ url_for('auth.login') }}" class="auth-link"><ion-icon name="person-circle-outline"></ion-icon></a></li>
+            <li><a href="{{ url_for('auth.login') }}" class="auth-link"><ion-icon
+                        name="person-circle-outline"></ion-icon></a></li>
             {% endif %}
         </ul>
     </nav>
-    
+
     <!-- Hero Section -->
     <div class="hero-section">
         <!-- Background circles -->
         <div class="circle purple"></div>
         <div class="circle pink"></div>
-        
+
         <!-- Save Zone big logo -->
         <div class="big_logo_container">
             <div class="big_logo">
                 <img src="{{ url_for('static', filename='images/save zone.png') }}" alt="Save Zone Logo">
             </div>
         </div>
-        
+
         <!-- Button container -->
         <div class="button">
             <a href="{{ url_for('views.upload') }}" class="Upload">
@@ -72,7 +74,7 @@
                 <p>Create</p><ion-icon name="add-outline" class="Create-icon"></ion-icon>
             </a>
         </div>
-        
+
         <!-- Scroll indicator -->
         <div class="scroll-indicator">
             <p>Scroll to explore</p>
@@ -83,7 +85,7 @@
     <!-- Featured Content Section -->
     <section class="featured-content" id="about">
         <h2>Welcome to Save Zone</h2>
-        
+
         <!-- Feature Showcase -->
         <div class="feature-showcase">
             <div class="showcase-slider">
@@ -92,20 +94,23 @@
                     <div class="showcase-content">
                         <div class="showcase-text">
                             <h2>Turn Your Video</h2>
-                            <p>Check out our new 3D view! Visualize your dance formations from any angle for perfect choreography planning.</p>
+                            <p>Check out our new 3D view! Visualize your dance formations from any angle for perfect
+                                choreography planning.</p>
                         </div>
                         <div class="showcase-image">
-                            <img src="{{ url_for('static', filename='images/dance.png') }}" alt="3D Dance Zone Visualization">
+                            <img src="{{ url_for('static', filename='images/dance.png') }}"
+                                alt="3D Dance Zone Visualization">
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Slide 2: After Zone Change -->
                 <div class="showcase-slide">
                     <div class="showcase-content">
                         <div class="showcase-text">
                             <h2>To Performance</h2>
-                            <p>Plan every movement with exact timing and positioning. Perfect for group performances and professional dance productions.</p>
+                            <p>Plan every movement with exact timing and positioning. Perfect for group performances and
+                                professional dance productions.</p>
                         </div>
                         <div class="showcase-image">
                             <img src="{{ url_for('static', filename='images/form.png') }}" alt="Dance Formations">
@@ -113,14 +118,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Slider Dots -->
             <div class="showcase-dots">
                 <span class="dot active" data-slide="0"></span>
                 <span class="dot" data-slide="1"></span>
             </div>
         </div>
-        
+
         <!-- Enhanced content cards - Grid layout instead of carousel -->
         <div class="content-carousel">
             <div class="content-card">
@@ -128,9 +133,10 @@
                     <img src="{{ url_for('static', filename='images/upload-page.png') }}" alt="Upload Feature">
                 </div>
                 <h3>Upload</h3>
-                <p>Upload your existing dance videos in seconds. Our AI-powered system will automatically detect dancers and positions.</p>
+                <p>Upload your existing dance videos in seconds. Our AI-powered system will automatically detect dancers
+                    and positions.</p>
             </div>
-            
+
             <div class="content-card">
                 <div class="feature-image">
                     <img src="{{ url_for('static', filename='images/create-page.png') }}" alt="Create Feature">
@@ -138,14 +144,14 @@
                 <h3>Create</h3>
                 <p>Design your stage layout and arrange dancer positions with precision and ease.</p>
             </div>
-            
+
             <div class="content-card">
                 <div class="feature-image">
                     <img src="{{ url_for('static', filename='images/preview-page.png') }}" alt="Preview Feature">
                 </div>
                 <h3>Preview & Edit</h3>
                 <p>Review your work, make adjustments, and perfect your choreography before the rehearsal.</p>
-            </div>        
+            </div>
         </div>
     </section>
 
@@ -193,7 +199,7 @@
                     </li>
                 </ul>
             </div>
-            
+
             <div class="button-column">
                 <div class="action-card">
                     <div class="card-content">
@@ -225,12 +231,12 @@
     <div class="flash-messages">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}" role="alert">
-                {{ message }}
-                <button type="button" class="close-alert">&times;</button>
-            </div>
-            {% endfor %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+            <button type="button" class="close-alert">&times;</button>
+        </div>
+        {% endfor %}
         {% endif %}
         {% endwith %}
     </div>
@@ -242,28 +248,28 @@
     <script>
         // Close flash messages
         document.querySelectorAll('.close-alert').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 this.parentNode.style.display = 'none';
             });
         });
-        
+
         // Auto-hide flash messages after 5 seconds
-        setTimeout(function() {
+        setTimeout(function () {
             document.querySelectorAll('.alert').forEach(alert => {
                 alert.style.opacity = '0';
-                setTimeout(function() {
+                setTimeout(function () {
                     alert.style.display = 'none';
                 }, 500);
             });
         }, 5000);
-        
+
         // Smooth scroll for scroll indicator
-        document.querySelector('.scroll-indicator').addEventListener('click', function() {
-            document.querySelector('.featured-content').scrollIntoView({ 
-                behavior: 'smooth' 
+        document.querySelector('.scroll-indicator').addEventListener('click', function () {
+            document.querySelector('.featured-content').scrollIntoView({
+                behavior: 'smooth'
             });
         });
-        
+
         // Feature showcase slider functionality
         const slides = document.querySelectorAll('.showcase-slide');
         const dots = document.querySelectorAll('.showcase-dots .dot');
@@ -276,31 +282,31 @@
             slides.forEach(slide => {
                 slide.classList.remove('active');
             });
-            
+
             // Deactivate all dots
             dots.forEach(dot => {
                 dot.classList.remove('active');
             });
-            
+
             // Show the selected slide
             slides[index].classList.add('active');
             dots[index].classList.add('active');
-            
+
             currentSlide = index;
         }
-        
+
         // Function to move to the next slide
         function nextSlide() {
             const newIndex = (currentSlide + 1) % slides.length;
             showSlide(newIndex);
         }
-        
+
         // Start auto-sliding
         slideInterval = setInterval(nextSlide, 5000);
-        
+
         // Add click event listeners to dots
         dots.forEach((dot, index) => {
-            dot.addEventListener('click', function() {
+            dot.addEventListener('click', function () {
                 showSlide(index);
                 clearInterval(slideInterval);
                 slideInterval = setInterval(nextSlide, 2000);
@@ -308,4 +314,5 @@
         });
     </script>
 </body>
+
 </html>
