@@ -1,5 +1,5 @@
 # เลือก Python เวอร์ชันที่ต้องการ
-FROM python:3.10.12
+FROM python:3.10.17-slim
 
 # ตั้งค่าพื้นที่ทำงาน
 WORKDIR /app
