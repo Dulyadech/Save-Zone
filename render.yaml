@@ -3,3 +3,4 @@ services:
     name: my-flask-app
     env: docker
     dockerfilePath: Dockerfile
+    plan: free

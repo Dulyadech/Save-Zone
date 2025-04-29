@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # ติดตั้ง dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # ตั้งค่าเริ่มต้นให้รัน Flask app
-CMD ["gunicorn", "main:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "main:app"]
