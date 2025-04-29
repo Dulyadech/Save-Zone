@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: my-flask-app
+    env: docker
+    dockerfilePath: Dockerfile
